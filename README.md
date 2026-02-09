@@ -1,66 +1,48 @@
-# 🛸 Antigravity Playground
+# Antigravity Framework x CEO Assistant
 
-**The Ground Zero Foundation for Autonomous Agent Engineering**
+This repository contains the **CEO Assistant Operational System**, an automated Executive Assistant built on the Antigravity Framework. It combines a rules-based decision engine with a desktop "Command Center" dashboard.
 
-![Antigravity Banner](https://img.shields.io/badge/Antigravity-Protocol_v2.3-blueviolet?style=for-the-badge)
-![License](https://img.shields.io/badge/License-MIT-green?style=for-the-badge)
-![Framework](https://img.shields.io/badge/Framework-Ground_Zero-orange?style=for-the-badge)
+## 🚀 Features
 
-## 🌌 Philosophy
+*   **Core Logic:** Rules engine prioritizing Revenue & Asset Protection.
+*   **Daily Pulse:** Automated AM/PM routines (Inbox Zero, Calendar Audit).
+*   **Travel Planner:** Generates comprehensive Markdown Trip Files.
+*   **Desktop App:** Electron-based dashboard for visual management.
+*   **Real Integrations:** Connects to **Gmail** and **Google Calendar** via OAuth2.
 
-The **Antigravity Framework** is a deterministic state-machine protocol designed to eliminate the "hallucination spiral" in AI coding agents. By enforcing a rigid, predictable filesystem ontology (The Golden Tree) and a structured development lifecycle (ASDLC), we enable agents to build production-grade software with 100% reliability.
+## 🛠 Setup & Installation
 
----
+1.  **Install Dependencies:**
+    ```bash
+    npm install
+    ```
 
-## ⚡ Quick Start
+2.  **Configure Google Cloud:**
+    *   Create a project in Google Cloud Console.
+    *   Enable Gmail and Calendar APIs.
+    *   Create OAuth2 Desktop App credentials.
+    *   Copy `.env.example` to `.env` and add your keys:
+        ```bash
+        cp .env.example .env
+        ```
 
-### 🤖 For Agents
+3.  **Run the App:**
+    ```bash
+    npm start
+    ```
 
-1.  **Initialize**: Read `.antigravity/BOOTLOADER.md` sequentially.
-2.  **Verify**: Run `npm test` to ensure the Golden Tree is intact.
+## 📂 Project Structure
 
-### 👤 For Humans
+*   `src/index.js` - The Kernel entry point.
+*   `src/plugins/` - Functional modules:
+    *   `core_logic/` - Rules & Preferences.
+    *   `calendar_manager/` - Calendar auditing & sync.
+    *   `inbox_processor/` - Email triage & drafting.
+    *   `trip_planner/` - Travel file generation.
+    *   `auth_manager/` - OAuth2 handling.
+*   `src/electron/` - Desktop app backend (Main Process).
+*   `src/ui/` - Dashboard Frontend (HTML/CSS/JS).
+*   `docs/` - SOPs and Templates.
 
-1.  **Clone**: Use this repository as the base for any new automation project.
-2.  **Hydrate**: `npm install` all dependencies.
-3.  **Vision**: Populate the `PRODUCT VISION` section in `AGENTS.md`.
-4.  **Execute**: Watch as agents use the pre-crystallized **Skills** to build your vision.
-
----
-
-## 📂 The Golden Tree (Ontology)
-
-```text
-.antigravity/       # [MEMORY] Agent Brain & Protocols
-├── AGENT_OS.md     # The Executable Logic Stream
-├── BOOTLOADER.md   # Critical Start Sequences
-├── TRAINING_MANUAL.md  # Core Engineering Ethos
-├── config.json     # Autonomy & Whitelist Config
-├── context/        # Active Working Memory (logs, plans)
-└── skills/         # Crystallized Logic Templates
-
-docs/               # [GOVERNANCE] Knowledge & Rules
-├── ARCHITECTURE.md # System Design & Boundaries
-├── CONSTITUTION.md # The Agent's Safety Rules
-└── TASKS.md        # Recurring Workflow Backlog
-
-src/                # [CODE] Application Implementation
-tests/              # [TRUTH] Verification & Integrity Suites
-AGENTS.md           # [KERNEL] Environment & Forbidden States
-```
-
----
-
-## 🛡️ Autonomy Levels
-
-| Level | Description     | Safety Gate                 |
-| ----- | --------------- | --------------------------- |
-| **1** | **Interactive** | Human merges all PRs        |
-| **2** | **Supervised**  | CI verifies, Human approves |
-| **3** | **Autonomous**  | Auto-merge on CI pass       |
-
----
-
-## 📜 License
-
-MIT © 2026 Antigravity Engineering
+## 📚 Documentation
+See `docs/` for the original SOP and `docs/templates/` for response scripts.
