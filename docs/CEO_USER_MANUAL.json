@@ -1,0 +1,21 @@
+{
+    "meta": {
+        "description": "The CEO User Manual - Preferences Database",
+        "last_updated": "2026-02-09"
+    },
+    "airline": {
+        "seat_preference": "Aisle",
+        "loyalty_program": "Delta SkyMiles"
+    },
+    "hotel": {
+        "room_preference": "High floor, away from elevator",
+        "gym_required": true
+    },
+    "coffee": {
+        "order": "Black coffee, no sugar"
+    },
+    "meeting": {
+        "default_duration": 20,
+        "platform": "Zoom"
+    }
+}

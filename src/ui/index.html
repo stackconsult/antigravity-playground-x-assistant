@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CEO Assistant Command Center</title>
+    <link rel="stylesheet" href="dashboard.css">
+</head>
+
+<body>
+    <div class="app-container">
+        <!-- Sidebar Navigation -->
+        <nav class="sidebar">
+            <div class="logo">ANTIGRAVITY</div>
+            <ul class="nav-links">
+                <li class="active" data-tab="pulse">Daily Pulse</li>
+                <li data-tab="travel">Travel</li>
+                <li data-tab="preferences">Preferences</li>
+                <li data-tab="settings">Settings</li>
+            </ul>
+        </nav>
+
+        <!-- Main Content Area -->
+        <main class="content">
+            <!-- Header -->
+            <header>
+                <h1 id="page-title">Daily Pulse</h1>
+                <div class="status-indicator">
+                    <span class="dot"></span> System Online
+                </div>
+            </header>
+
+            <!-- Dynamic Views -->
+            <div id="view-pulse" class="view active">
+                <button id="btn-run-pulse" class="primary-btn">RUN DAILY PULSE</button>
+
+                <div class="dashboard-grid">
+                    <div class="card" id="card-inbox">
+                        <h3>Inbox</h3>
+                        <div class="metric">0</div>
+                        <div class="subtext">Items Pending</div>
+                        <ul id="inbox-list" class="item-list"></ul>
+                    </div>
+
+                    <div class="card" id="card-calendar">
+                        <h3>Calendar Issues</h3>
+                        <div class="metric">0</div>
+                        <div class="subtext">Conflicts Found</div>
+                        <ul id="calendar-list" class="item-list"></ul>
+                    </div>
+
+                    <div class="card full-width" id="card-brief">
+                        <h3>Daily Briefing</h3>
+                        <pre id="daily-brief-text">Waiting for execution...</pre>
+                    </div>
+                </div>
+            </div>
+
+            <div id="view-travel" class="view hidden">
+                <h2>Upcoming Trips</h2>
+                <div id="trip-list" class="trip-grid"></div>
+            </div>
+
+            <div id="view-preferences" class="view hidden">
+                <h2>CEO User Manual</h2>
+                <pre id="pref-json"></pre>
+            </div>
+
+            <div id="view-settings" class="view hidden">
+                <h2>Integrations</h2>
+                <div class="card">
+                    <h3>Google Workspace</h3>
+                    <p class="subtext">Connect Gmail and Calendar to enable real-time features.</p>
+                    <div id="auth-status" class="status-indicator">
+                        <span class="dot" style="background:gray"></span> Disconnected
+                    </div>
+                    <button id="btn-auth-google" class="primary-btn" style="margin-top:15px">Connect Google
+                        Account</button>
+                </div>
+            </div>
+        </main>
+    </div>
+    <script src="renderer.js"></script>
+</body>
+
+</html>
