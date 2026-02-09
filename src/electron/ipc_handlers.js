@@ -23,6 +23,7 @@ const IPCHandlers = {
         kernel.use(CalendarManager);
         kernel.use(InboxProcessor);
         kernel.use(TripPlanner);
+        kernel.use(AuthManager);
 
         await kernel.boot();
         IPCHandlers.kernel = kernel;
@@ -31,6 +32,21 @@ const IPCHandlers = {
         ipcMain.handle('RUN_DAILY_PULSE', IPCHandlers.handleDailyPulse);
         ipcMain.handle('GET_WEEKLY_REVIEW', IPCHandlers.handleWeeklyReview);
         ipcMain.handle('GET_PREFERENCES', IPCHandlers.handleGetPreferences);
+        ipcMain.handle('CONNECT_GOOGLE', IPCHandlers.handleConnectGoogle);
+
+        // Check initial auth status
+        if (kernel.auth) {
+            await kernel.auth.init(kernel);
+        }
+    },
+
+    handleConnectGoogle: async () => {
+        try {
+            return await IPCHandlers.kernel.auth.authenticate();
+        } catch (e) {
+            console.error('[IPC] Auth Error:', e);
+            return false;
+        }
     },
 
     handleDailyPulse: async () => {

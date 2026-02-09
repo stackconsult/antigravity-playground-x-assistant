@@ -95,7 +95,7 @@ document.getElementById('btn-auth-google').addEventListener('click', async () =>
 
 function updateAuthStatus(isConnected) {
     const statusDiv = document.getElementById('auth-status');
-    const dot = statusDiv.querySelector('.dot');
+    // const dot = statusDiv.querySelector('.dot'); // Removed unused var
 
     if (isConnected) {
         statusDiv.innerHTML = '<span class="dot" style="background:#03dac6"></span> Connected';
