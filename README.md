@@ -21,10 +21,12 @@ This repository contains the **CEO Assistant Operational System**, an automated 
     *   Create a project in Google Cloud Console.
     *   Enable Gmail and Calendar APIs.
     *   Create OAuth2 Desktop App credentials.
-    *   Copy `.env.example` to `.env` and add your keys:
+    *   **Option A (Dev):** Copy `.env.example` to `.env` and add your keys:
         ```bash
         cp .env.example .env
         ```
+    *   **Option B (Production):** Launch the app (`npm start`), go to **Settings**, and enter your Client ID/Secret directly.
+
 
 3.  **Run the App:**
     ```bash

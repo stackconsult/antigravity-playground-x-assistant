@@ -32,7 +32,18 @@ const IPCHandlers = {
         ipcMain.handle('RUN_DAILY_PULSE', IPCHandlers.handleDailyPulse);
         ipcMain.handle('GET_WEEKLY_REVIEW', IPCHandlers.handleWeeklyReview);
         ipcMain.handle('GET_PREFERENCES', IPCHandlers.handleGetPreferences);
-        ipcMain.handle('CONNECT_GOOGLE', IPCHandlers.handleConnectGoogle);
+        // Auth
+        ipcMain.handle('CONNECT_GOOGLE', async () => {
+            return await IPCHandlers.kernel.auth.authenticate();
+        });
+
+        ipcMain.handle('SAVE_CREDENTIALS', async (event, creds) => {
+            return await IPCHandlers.kernel.auth.saveCredentials(creds);
+        });
+
+        ipcMain.handle('CHECK_AUTH_STATUS', async () => {
+            return await IPCHandlers.kernel.auth.checkStatus();
+        });
 
         // Check initial auth status
         if (kernel.auth) {

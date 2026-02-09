@@ -4,105 +4,192 @@
  */
 
 // Navigation
-const tabs = document.querySelectorAll('.nav-links li');
+const navLinks = document.querySelectorAll('.nav-link');
 const views = document.querySelectorAll('.view');
 
-tabs.forEach(tab => {
-    tab.addEventListener('click', () => {
+// UI Elements
+const saveAuthBtn = document.getElementById('save-auth-btn');
+const clientIdInput = document.getElementById('client-id-input');
+const clientSecretInput = document.getElementById('client-secret-input');
+const authStatusMsg = document.getElementById('auth-status-msg');
+const btnAuthGoogle = document.getElementById('btn-auth-google');
+const statusDiv = document.getElementById('auth-status');
+
+// Navigation Logic
+navLinks.forEach(link => {
+    link.addEventListener('click', () => {
+        const tabId = link.dataset.tab;
+
         // Remove active class
-        tabs.forEach(t => t.classList.remove('active'));
+        navLinks.forEach(t => t.classList.remove('active'));
         views.forEach(v => v.classList.add('hidden'));
 
         // Activate clicked tab
-        tab.classList.add('active');
-        const viewId = `view-${tab.dataset.tab}`;
-        document.getElementById(viewId).classList.remove('hidden');
-        document.getElementById('page-title').innerText = tab.innerText;
+        link.classList.add('active');
+        const viewId = `view-${tabId}`;
+        const viewEl = document.getElementById(viewId);
+        if (viewEl) {
+            viewEl.classList.remove('hidden');
+            document.getElementById('page-title').innerText = link.innerText;
+        }
     });
 });
 
 // Run Daily Pulse
-document.getElementById('btn-run-pulse').addEventListener('click', async () => {
-    const btn = document.getElementById('btn-run-pulse');
-    btn.innerText = 'RUNNING...';
-    btn.disabled = true;
+const btnRunPulse = document.getElementById('btn-run-pulse');
+if (btnRunPulse) {
+    btnRunPulse.addEventListener('click', async () => {
+        btnRunPulse.innerText = 'RUNNING...';
+        btnRunPulse.disabled = true;
 
-    try {
-        const data = await window.api.runDailyPulse();
-        renderPulse(data);
-    } catch (e) {
-        console.error(e);
-        alert('Failed to run Daily Pulse');
-    } finally {
-        btn.innerText = 'RUN DAILY PULSE';
-        btn.disabled = false;
-    }
-});
+        // Initial check
+        const status = await window.api.checkAuthStatus();
+        updateAuthStatus(status.isAuthenticated);
+
+        try {
+            const data = await window.api.runDailyPulse();
+            renderPulse(data);
+        } catch (e) {
+            console.error(e);
+            alert('Failed to run Daily Pulse');
+        } finally {
+            btnRunPulse.innerText = 'RUN DAILY PULSE';
+            btnRunPulse.disabled = false;
+        }
+    });
+}
 
 function renderPulse(data) {
     // 1. Inbox
-    document.querySelector('#card-inbox .metric').innerText = data.emails.length;
+    const inboxMetric = document.querySelector('#card-inbox .metric');
+    if (inboxMetric) inboxMetric.innerText = data.emails.length;
+
     const inboxList = document.getElementById('inbox-list');
-    inboxList.innerHTML = '';
-    data.emails.forEach(email => {
-        const li = document.createElement('li');
-        li.innerHTML = `<span class="tag">${email.label}</span> ${email.subject}`;
-        inboxList.appendChild(li);
-    });
+    if (inboxList) {
+        inboxList.innerHTML = '';
+        data.emails.forEach(email => {
+            const li = document.createElement('li');
+            li.innerHTML = `<span class="tag">${email.label}</span> ${email.subject}`;
+            inboxList.appendChild(li);
+        });
+    }
 
     // 2. Calendar
-    document.querySelector('#card-calendar .metric').innerText = data.issues.length;
+    const calMetric = document.querySelector('#card-calendar .metric');
+    if (calMetric) calMetric.innerText = data.issues.length;
+
     const calList = document.getElementById('calendar-list');
-    calList.innerHTML = '';
-    data.issues.forEach(issue => {
-        const li = document.createElement('li');
-        li.innerHTML = `<span class="tag" style="background:#cf6679">${issue.severity}</span> ${issue.title}: ${issue.issue}`;
-        calList.appendChild(li);
-    });
+    if (calList) {
+        calList.innerHTML = '';
+        data.issues.forEach(issue => {
+            const li = document.createElement('li');
+            li.innerHTML = `<span class="tag" style="background:#cf6679">${issue.severity}</span> ${issue.title}: ${issue.issue}`;
+            calList.appendChild(li);
+        });
+    }
 
     // 3. Brief
-    document.getElementById('daily-brief-text').innerText = data.summary;
+    const briefText = document.getElementById('daily-brief-text');
+    if (briefText) briefText.innerText = data.summary;
 }
 
 // Initial Loads
 async function loadPreferences() {
-    const prefs = await window.api.getPreferences();
-    document.getElementById('pref-json').innerText = JSON.stringify(prefs, null, 2);
+    try {
+        const prefs = await window.api.getPreferences();
+        const jsonEl = document.getElementById('pref-json');
+        if (jsonEl) jsonEl.innerText = JSON.stringify(prefs, null, 2);
+    } catch (e) {
+        console.warn('Failed to load preferences', e);
+    }
 }
 
-// Settings & Auth
-document.getElementById('btn-auth-google').addEventListener('click', async () => {
-    const btn = document.getElementById('btn-auth-google');
-    btn.innerText = 'CONNECTING...';
-    btn.disabled = true;
+// Settings & Auth - SAVE Credentials
+if (saveAuthBtn) {
+    saveAuthBtn.addEventListener('click', async () => {
+        const clientId = clientIdInput.value.trim();
+        const clientSecret = clientSecretInput.value.trim();
 
-    try {
-        const success = await window.api.connectGoogle();
-        if (success) {
-            alert('Connected successfully!');
-            updateAuthStatus(true);
-        } else {
-            alert('Connection failed.');
+        if (!clientId || !clientSecret) {
+            authStatusMsg.textContent = 'Please enter both Client ID and Client Secret.';
+            authStatusMsg.style.color = '#ff6b6b';
+            return;
         }
-    } catch (e) {
-        console.error(e);
-        alert('Error during authentication.');
-    } finally {
-        btn.innerText = 'Connect Google Account';
-        btn.disabled = false;
-    }
-});
+
+        authStatusMsg.textContent = 'Saving credentials...';
+        authStatusMsg.style.color = '#bb86fc';
+
+        try {
+            await window.api.saveCredentials({ clientId, clientSecret });
+            authStatusMsg.textContent = 'Credentials saved! Connecting...';
+
+            // Auto-trigger connection
+            const success = await window.api.connectGoogle();
+            if (success) {
+                authStatusMsg.textContent = 'Connected successfully!';
+                authStatusMsg.style.color = '#03dac6';
+                updateAuthStatus(true);
+            } else {
+                authStatusMsg.textContent = 'Saved, but connection failed. Please try again.';
+                authStatusMsg.style.color = '#ff6b6b';
+            }
+        } catch (error) {
+            authStatusMsg.textContent = 'Error: ' + error.message;
+            authStatusMsg.style.color = '#ff6b6b';
+        }
+    });
+
+    // Load initial credentials status if possible? 
+    // For security we might not want to fill the inputs, but we can check if they exist.
+}
+
+// Auth - Connect Button (Legacy/Direct)
+if (btnAuthGoogle) {
+    btnAuthGoogle.addEventListener('click', async () => {
+        btnAuthGoogle.innerText = 'CONNECTING...';
+        btnAuthGoogle.disabled = true;
+
+        try {
+            const success = await window.api.connectGoogle();
+            if (success) {
+                alert('Connected successfully!');
+                updateAuthStatus(true);
+            } else {
+                alert('Connection failed. Please check your credentials in Settings.');
+            }
+        } catch (e) {
+            console.error(e);
+            alert('Error during authentication.');
+        } finally {
+            btnAuthGoogle.innerText = 'Connect Google Account';
+            btnAuthGoogle.disabled = false;
+        }
+    });
+}
 
 function updateAuthStatus(isConnected) {
-    const statusDiv = document.getElementById('auth-status');
-    // const dot = statusDiv.querySelector('.dot'); // Removed unused var
+    if (!statusDiv) return;
 
     if (isConnected) {
         statusDiv.innerHTML = '<span class="dot" style="background:#03dac6"></span> Connected';
-        document.getElementById('btn-auth-google').innerText = 'Reconnect Account';
+        if (btnAuthGoogle) btnAuthGoogle.innerText = 'Reconnect Account';
     } else {
         statusDiv.innerHTML = '<span class="dot" style="background:gray"></span> Disconnected';
     }
 }
 
+async function checkInitialStatus() {
+    try {
+        const status = await window.api.checkAuthStatus();
+        updateAuthStatus(status.isAuthenticated);
+        if (status.hasCredentials && !status.isAuthenticated) {
+            if (authStatusMsg) authStatusMsg.textContent = 'Credentials found. Please connect.';
+        }
+    } catch (e) {
+        console.warn('Failed to check auth status', e);
+    }
+}
+
+// Init
 loadPreferences();
+checkInitialStatus();

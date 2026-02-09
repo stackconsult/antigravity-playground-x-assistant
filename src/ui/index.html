@@ -62,6 +62,39 @@
                 <div id="trip-list" class="trip-grid"></div>
             </div>
 
+            <div id="settings-content" class="content-section" style="display: none;">
+                <h2>Production Settings</h2>
+                <div class="card">
+                    <h3>Google Cloud Authorization</h3>
+                    <p>Enter your <strong>Client ID</strong> and <strong>Client Secret</strong> to authorize this
+                        application.</p>
+                    <p class="text-xs text-muted">These keys are stored securely in your OS keychain.</p>
+
+                    <div style="margin-top: 20px;">
+                        <div style="margin-bottom: 15px;">
+                            <label style="display: block; margin-bottom: 5px; font-weight: 500;">Client ID</label>
+                            <input type="text" id="client-id-input" placeholder="12345...apps.googleusercontent.com"
+                                style="width: 100%; padding: 10px; border-radius: 6px; border: 1px solid rgba(255,255,255,0.1); background: rgba(0,0,0,0.2); color: white;">
+                        </div>
+
+                        <div style="margin-bottom: 15px;">
+                            <label style="display: block; margin-bottom: 5px; font-weight: 500;">Client Secret</label>
+                            <input type="password" id="client-secret-input" placeholder="GOCSPX-..."
+                                style="width: 100%; padding: 10px; border-radius: 6px; border: 1px solid rgba(255,255,255,0.1); background: rgba(0,0,0,0.2); color: white;">
+                        </div>
+
+                        <button id="save-auth-btn" class="btn btn-primary" style="width: 100%;">Save & Connect Google
+                            Account</button>
+                        <p id="auth-status-msg" style="margin-top: 10px; font-size: 0.9em;"></p>
+                    </div>
+                </div>
+
+                <div class="card" style="margin-top: 20px;">
+                    <h3>User Preferences</h3>
+                    <p>Edit your preferences in <code>docs/CEO_USER_MANUAL.json</code></p>
+                </div>
+            </div>
+
             <div id="view-preferences" class="view hidden">
                 <h2>CEO User Manual</h2>
                 <pre id="pref-json"></pre>
