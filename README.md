@@ -10,6 +10,43 @@ This repository contains the **CEO Assistant Operational System**, an automated 
 *   **Desktop App:** Electron-based dashboard for visual management.
 *   **Real Integrations:** Connects to **Gmail** and **Google Calendar** via OAuth2.
 
+### 🚀 Installation & Build
+
+**Prerequisites:**
+- Node.js (v18+)
+
+**1. Install Dependencies**
+```bash
+sudo npm install
+```
+*(Note: `sudo` may be required due to permission settings on some systems)*
+
+**2. Development**
+```bash
+npm start
+```
+This launches the app in development mode with hot-reloading.
+
+**3. Package for Distribution (Mac/Win/Linux)**
+```bash
+npm run dist
+```
+This generates a standalone installer (e.g., `.dmg`, `.exe`) in the `dist/` folder.
+
+---
+
+### 🔑 Authentication Setup
+
+1.  **Launch the App**: Open Antigravity Assistant.
+2.  **Go to Settings**: Click the 'Settings' tab.
+3.  **Enter Credentials**: Input your **Google Client ID** and **Client Secret**.
+4.  **Connect**: Click 'Save & Connect'.
+    - A browser window will open for you to log in to your Google Account.
+    - Grant the requested permissions.
+5.  **Status**: The app will show "Authenticated" upon success.
+
+*(Credentials are stored securely in your system's User Data directory)*
+
 ## 🛠 Setup & Installation
 
 1.  **Install Dependencies:**
