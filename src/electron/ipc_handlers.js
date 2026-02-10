@@ -35,12 +35,17 @@ const IPCHandlers = {
         ipcMain.handle('GET_WEEKLY_REVIEW', IPCHandlers.handleWeeklyReview);
         ipcMain.handle('GET_PREFERENCES', IPCHandlers.handleGetPreferences);
         // Auth
-        ipcMain.handle('CONNECT_GOOGLE', async () => {
-            return await IPCHandlers.kernel.auth.authenticate();
-        });
+        ipcMain.handle('CONNECT_GOOGLE', IPCHandlers.handleConnectGoogle);
 
         ipcMain.handle('SAVE_CREDENTIALS', async (event, creds) => {
             return await IPCHandlers.kernel.auth.saveCredentials(creds);
+        });
+
+        ipcMain.handle('SAVE_PREFERENCES', async (event, prefs) => {
+            if (IPCHandlers.kernel.preferences) {
+                return IPCHandlers.kernel.preferences.save(prefs);
+            }
+            return false;
         });
 
         ipcMain.handle('CHECK_AUTH_STATUS', async () => {
@@ -80,14 +85,35 @@ const IPCHandlers = {
         }
 
         // Map to UI format
-        const processedEmails = emails.map(email => ({
-            id: email.id,
-            subject: email.subject,
-            // Map Category to Label for UI
-            label: email.priority.category === 'CRITICAL' ? '@Urgent' :
-                (email.priority.category === 'LOW' ? '@Low Priority' : '@Inbox'),
-            score: email.priority.score, // Pass score for visualization if needed
-            draft: email.action.includes('Critical') ? null : null // Draft logic (TODO)
+        const processedEmails = await Promise.all(emails.map(async email => {
+            // Generate Draft if Critical
+            let draft = null;
+            if (email.priority.category === 'CRITICAL') {
+                try {
+                    // Call Intelligence Manager (Real LLM)
+                    if (kernel.intelligence) {
+                        draft = await kernel.intelligence.generateDraft(
+                            email.from || 'Unknown',
+                            email.subject,
+                            email.snippet || '' // Body would be better but snippet is what we have in this view
+                        );
+                    } else {
+                        draft = "Error: Intelligence Module not loaded.";
+                    }
+                } catch (e) {
+                    console.error('Draft Gen Error', e);
+                    draft = "Error generating draft.";
+                }
+            }
+
+            return {
+                id: email.id,
+                subject: email.subject,
+                label: email.priority.category === 'CRITICAL' ? '@Urgent' :
+                    (email.priority.category === 'LOW' ? '@Low Priority' : '@Inbox'),
+                score: email.priority.score,
+                draft: draft
+            };
         }));
 
         return {
@@ -107,7 +133,10 @@ const IPCHandlers = {
     },
 
     handleGetPreferences: async () => {
-        return IPCHandlers.kernel.preferences.preferences;
+        if (IPCHandlers.kernel.preferences) {
+            return IPCHandlers.kernel.preferences.data;
+        }
+        return {};
     }
 };
 

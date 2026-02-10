@@ -156,7 +156,28 @@ h1 {
     padding: 2px 6px;
     border-radius: 4px;
     margin-right: 8px;
+    margin-right: 8px;
     background: #333;
+    color: #fff;
+    font-weight: 500;
+}
+
+.tag.urgent {
+    background-color: var(--danger);
+    /* Red */
+    border: 1px solid #ff8a80;
+}
+
+.tag.inbox {
+    background-color: var(--secondary);
+    /* Teal */
+    color: #000;
+}
+
+.tag.low {
+    background-color: #333;
+    /* Gray */
+    color: #888;
 }
 
 .view.hidden {
@@ -230,4 +251,30 @@ h1 {
 
 .action-btn.delete:hover {
     background: var(--danger);
+}
+
+/* Draft Preview */
+.draft-preview {
+    margin-top: 10px;
+    background: #2a2a2a;
+    padding: 10px;
+    border-radius: 6px;
+    border-left: 2px solid var(--primary);
+}
+
+.draft-preview textarea {
+    width: 100%;
+    background: #111;
+    color: #fff;
+    border: 1px solid #444;
+    padding: 8px;
+    border-radius: 4px;
+    min-height: 80px;
+    margin-bottom: 8px;
+    font-family: inherit;
+}
+
+.sm-btn {
+    padding: 6px 12px;
+    font-size: 0.8rem;
 }

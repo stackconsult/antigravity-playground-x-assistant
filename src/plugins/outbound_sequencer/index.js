@@ -110,8 +110,55 @@ class OutboundSequencer {
 
         // 2. Draft/Send Email
         // For MVP, we DRAFT only (HITL)
-        const subject = `Intro to Antigravity: ${target.name}`; // Logic would fetch template
-        const body = `Hi ${target.name},\n\nWould love to chat.`; // Logic would fetch template
+        let subject = '';
+        let body = '';
+
+        if (this.kernel.intelligence) {
+            console.log(`[SEQUENCER] Generating AI Draft for ${target.email} (${target.campaignType})...`);
+
+            const userManual = this.kernel.preferences.get('userManual') || '';
+            const contextPrompt = `
+You are drafting an outbound email for a campaign.
+Campaign Type: ${target.campaignType}
+Target Name: ${target.name}
+Step: ${target.step + 1}
+User Manual: ${userManual}
+
+Goal for 'investor_outreach': Schedule a 15 min intro call to discuss Antigravity (AI Assistant).
+Goal for 'sales_cold': Sell the Antigravity software license.
+
+Write the Subject and Body.
+Format:
+SUBJECT: [Subject logic]
+BODY: [Body logic]
+`;
+
+            // Re-use generateDraft but we need a slightly different method locally or just parse the output?
+            // Existing generateDraft takes (sender, subject, body) and replies.
+            // We need a NEW method: generateOutreach(context).
+            // For now, I'll hack it by calling the generic generateDraft if I update IntelligenceManager, 
+            // OR I can just call the LLM directly via Intelligence.
+            // Let's assume I add a 'generateOutreach' method to IntelligenceManager or use the public 'callOpenAI'.
+            // Accessing internal method callOpenAI is risky if not exposed.
+            // I'll UPDATE IntelligenceManager first to expose a generic 'ask' method?
+            // Or just use the existing generateDraft and pass nulls? No that's for replies.
+            try {
+                const response = await this.kernel.intelligence.ask(prompt);
+
+                // Parse
+                const subjMatch = response.match(/SUBJECT:(.*)/i);
+                const bodyMatch = response.match(/BODY:([\s\S]*)/i);
+
+                if (subjMatch && bodyMatch) {
+                    subject = subjMatch[1].trim();
+                    body = bodyMatch[1].trim();
+                } else {
+                    body = response; // Fallback if format failed
+                }
+            } catch (e) {
+                console.error('[SEQUENCER] AI Gen Failed', e);
+            }
+        }
 
         await this.createDraft(auth, target.email, subject, body);
 

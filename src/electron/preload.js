@@ -11,5 +11,10 @@ contextBridge.exposeInMainWorld('api', {
     getPreferences: () => ipcRenderer.invoke('GET_PREFERENCES'),
     connectGoogle: () => ipcRenderer.invoke('CONNECT_GOOGLE'),
     saveCredentials: (creds) => ipcRenderer.invoke('SAVE_CREDENTIALS', creds),
-    checkAuthStatus: () => ipcRenderer.invoke('CHECK_AUTH_STATUS')
+    savePreferences: (prefs) => ipcRenderer.invoke('SAVE_PREFERENCES', prefs),
+    checkAuthStatus: () => ipcRenderer.invoke('CHECK_AUTH_STATUS'),
+
+    // CRM
+    getCampaigns: () => ipcRenderer.invoke('GET_CAMPAIGNS'),
+    addToCampaign: (target) => ipcRenderer.invoke('ADD_TO_CAMPAIGN', target)
 });
