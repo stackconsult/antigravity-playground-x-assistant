@@ -45,18 +45,20 @@ management.
 Creates `CONSTITUTION.md` in the root to enforce security rules on future
 agents.
 
-```markdown
+````markdown
 # CONSTITUTION.md - Electron Security
 
 ## 1. The Lethal Trifecta (PREVENTION)
 
 ### NEVER allow these three conditions simultaneously:
+
 1. **Remote Content**: Loading external URLs (e.g.,
    `win.loadURL('https://...')`)
 2. **Node Integration**: `webPreferences: { nodeIntegration: true }`
 3. **Context Isolation Disabled**: `webPreferences: { contextIsolation: false }`
 
 ## 2. Default Security Settings
+
 ALWAYS use these settings for `BrowserWindow`:
 
 ```javascript
@@ -67,14 +69,14 @@ webPreferences: {
   preload: path.join(__dirname, 'preload.js')
 }
 ```
+````
 
 ## 3. Network Policy
 
 - **Offline First**: App must function without internet.
 - **CSP**: Content Security Policy must mimic `default-src 'self'`.
 
-```markdown
-
+````markdown
 ### 4. Define Architecture
 
 Creates `ARCHITECTURE.md` to guide future agents on the 5-Layer pattern.
@@ -88,3 +90,4 @@ Creates `ARCHITECTURE.md` to guide future agents on the 5-Layer pattern.
 4. **Sidecar (Child Process)**: Python/Go scripts for AI/Automation logic.
 5. **Memory (Storage)**: SQLite (local) + Docker (databases).
 ```
+````

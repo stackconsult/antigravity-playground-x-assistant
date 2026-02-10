@@ -1,183 +1,296 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>CEO Assistant Command Center</title>
-    <link rel="stylesheet" href="dashboard.css">
-</head>
+    <link rel="stylesheet" href="dashboard.css" />
+  </head>
 
-<body>
+  <body>
     <div class="app-container">
-        <!-- Sidebar Navigation -->
-        <nav class="sidebar">
-            <div class="logo">ANTIGRAVITY</div>
-            <ul class="nav-links">
-                <li class="nav-link active" data-tab="pulse">Pulse</li>
-                <li class="nav-link" data-tab="travel">Travel</li>
-                <li class="nav-link" data-tab="crm">CRM</li> <!-- New Tab -->
-                <li class="nav-link" data-tab="settings">Settings</li>
-            </ul>
-        </nav>
+      <!-- Sidebar Navigation -->
+      <nav class="sidebar">
+        <div class="logo">ANTIGRAVITY</div>
+        <ul class="nav-links">
+          <li class="nav-link active" data-tab="pulse">Pulse</li>
+          <li class="nav-link" data-tab="travel">Travel</li>
+          <li class="nav-link" data-tab="crm">CRM</li>
+          <!-- New Tab -->
+          <li class="nav-link" data-tab="settings">Settings</li>
+        </ul>
+      </nav>
 
-        <!-- Main Content Area -->
-        <main class="content">
-            <!-- Header -->
-            <header>
-                <h1 id="page-title">Morning Pulse</h1>
-                <div class="status-indicator" id="auth-status">
-                    <span class="dot" style="background:gray"></span> Disconnected
-                </div>
-                <button class="secondary-btn" id="btn-calendar">📅 Calendar</button>
-            </header>
+      <!-- Main Content Area -->
+      <main class="content">
+        <!-- Header -->
+        <header>
+          <h1 id="page-title">Morning Pulse</h1>
+          <div class="status-indicator" id="auth-status">
+            <span class="dot" style="background: gray"></span> Disconnected
+          </div>
+          <button class="secondary-btn" id="btn-calendar">📅 Calendar</button>
+        </header>
 
-            <!-- VIEW: PULSE -->
-            <div id="view-pulse" class="view">
-                <div class="dashboard-grid">
-                    <!-- Inbox Card -->
-                    <div class="card" id="card-inbox">
-                        <h3>Inbox Zero</h3>
-                        <div class="metric">0</div>
-                        <div class="subtext">Unread Emails</div>
-                        <ul class="item-list" id="inbox-list">
-                            <!-- Items injected by JS -->
-                        </ul>
-                    </div>
-
-                    <!-- Calendar Card -->
-                    <div class="card" id="card-calendar">
-                        <h3>Calendar Audits</h3>
-                        <div class="metric">0</div>
-                        <div class="subtext">Conflicts / Missing Context</div>
-                        <ul class="item-list" id="calendar-list">
-                            <!-- Items injected by JS -->
-                        </ul>
-                    </div>
-
-                    <!-- Daily Brief -->
-                    <div class="card full-width">
-                        <h3>Daily Executive Brief</h3>
-                        <div class="item-list" id="daily-brief-text">
-                            Waiting for pulse...
-                        </div>
-                        <div style="margin-top:20px">
-                            <button class="primary-btn" id="btn-run-pulse">RUN DAILY PULSE</button>
-                        </div>
-                    </div>
-                </div>
+        <!-- VIEW: PULSE -->
+        <div id="view-pulse" class="view">
+          <div class="dashboard-grid">
+            <!-- Inbox Card -->
+            <div class="card" id="card-inbox">
+              <h3>Inbox Zero</h3>
+              <div class="metric">0</div>
+              <div class="subtext">Unread Emails</div>
+              <ul class="item-list" id="inbox-list">
+                <!-- Items injected by JS -->
+              </ul>
             </div>
 
-            <!-- VIEW: TRAVEL -->
-            <div id="view-travel" class="view hidden">
-                <div class="card">
-                    <h3>Upcoming Trips</h3>
-                    <p class="subtext">No upcoming trips detected.</p>
-                </div>
+            <!-- Calendar Card -->
+            <div class="card" id="card-calendar">
+              <h3>Calendar Audits</h3>
+              <div class="metric">0</div>
+              <div class="subtext">Conflicts / Missing Context</div>
+              <ul class="item-list" id="calendar-list">
+                <!-- Items injected by JS -->
+              </ul>
             </div>
 
-            <!-- VIEW: CRM -->
-            <div id="view-crm" class="view hidden">
-                <div class="dashboard-grid">
-                    <div class="card full-width">
-                        <h3>Add to Campaign</h3>
-                        <div style="display:flex; gap:10px; margin-top:10px;">
-                            <input type="email" id="crm-email" placeholder="Email"
-                                style="flex:1; padding:8px; background:#333; border:1px solid #444; color:white; border-radius:4px;">
-                            <input type="text" id="crm-name" placeholder="Name"
-                                style="flex:1; padding:8px; background:#333; border:1px solid #444; color:white; border-radius:4px;">
-                            <select id="crm-type"
-                                style="padding:8px; background:#333; border:1px solid #444; color:white; border-radius:4px;">
-                                <option value="investor_outreach">Investor Outreach</option>
-                                <option value="sales_cold">Sales Cold</option>
-                            </select>
-                            <button class="primary-btn sm-btn" id="btn-add-crm">Add</button>
-                        </div>
-                    </div>
+            <!-- Daily Brief -->
+            <div class="card full-width">
+              <h3>Daily Executive Brief</h3>
+              <div class="item-list" id="daily-brief-text">
+                Waiting for pulse...
+              </div>
+              <div style="margin-top: 20px">
+                <button class="primary-btn" id="btn-run-pulse">
+                  RUN DAILY PULSE
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
 
-                    <div class="card full-width">
-                        <h3>Active Campaigns</h3>
-                        <ul class="item-list" id="crm-list">
-                            <!-- Injected -->
-                        </ul>
-                    </div>
-                </div>
+        <!-- VIEW: TRAVEL -->
+        <div id="view-travel" class="view hidden">
+          <div class="card">
+            <h3>Upcoming Trips</h3>
+            <p class="subtext">No upcoming trips detected.</p>
+          </div>
+        </div>
+
+        <!-- VIEW: CRM -->
+        <div id="view-crm" class="view hidden">
+          <div class="dashboard-grid">
+            <div class="card full-width">
+              <h3>Add to Campaign</h3>
+              <div style="display: flex; gap: 10px; margin-top: 10px">
+                <input
+                  type="email"
+                  id="crm-email"
+                  placeholder="Email"
+                  style="
+                    flex: 1;
+                    padding: 8px;
+                    background: #333;
+                    border: 1px solid #444;
+                    color: white;
+                    border-radius: 4px;
+                  "
+                />
+                <input
+                  type="text"
+                  id="crm-name"
+                  placeholder="Name"
+                  style="
+                    flex: 1;
+                    padding: 8px;
+                    background: #333;
+                    border: 1px solid #444;
+                    color: white;
+                    border-radius: 4px;
+                  "
+                />
+                <select
+                  id="crm-type"
+                  style="
+                    padding: 8px;
+                    background: #333;
+                    border: 1px solid #444;
+                    color: white;
+                    border-radius: 4px;
+                  "
+                >
+                  <option value="investor_outreach">Investor Outreach</option>
+                  <option value="sales_cold">Sales Cold</option>
+                </select>
+                <button class="primary-btn sm-btn" id="btn-add-crm">Add</button>
+              </div>
             </div>
 
-            <div id="view-settings" class="view hidden">
-                <h2>Production Settings</h2>
-
-                <div class="card full-width" style="margin-bottom:20px;">
-                    <h3>Intelligence Settings</h3>
-                    <div class="input-group" style="margin-bottom:15px">
-                        <label style="display:block; margin-bottom:5px;">LLM Provider</label>
-                        <select id="llm-provider"
-                            style="width:100%; padding:10px; background:rgba(0,0,0,0.2); border:1px solid rgba(255,255,255,0.1); color:white; border-radius:6px;">
-                            <option value="openai">OpenAI (GPT-4)</option>
-                            <option value="gemini" disabled>Google Gemini (Coming Soon)</option>
-                        </select>
-                    </div>
-                    <div class="input-group" style="margin-bottom:15px">
-                        <label style="display:block; margin-bottom:5px;">API Key</label>
-                        <input type="password" id="llm-api-key" placeholder="sk-..."
-                            style="width:100%; padding:10px; background:rgba(0,0,0,0.2); border:1px solid rgba(255,255,255,0.1); color:white; border-radius:6px;">
-                    </div>
-                    <div class="input-group">
-                        <label style="display:block; margin-bottom:5px;">User Manual (Directives for AI)</label>
-                        <textarea id="user-manual" rows="4"
-                            style="width:100%; padding:10px; background:rgba(0,0,0,0.2); border:1px solid rgba(255,255,255,0.1); color:white; border-radius:6px; font-family:inherit;"></textarea>
-                    </div>
-                    <button class="primary-btn" id="save-prefs-btn" style="margin-top:15px; width:100%;">Save
-                        Intelligence Settings</button>
-                </div>
-
-                <div class="card">
-                    <h3>Google Cloud Authorization</h3>
-                    <p>Enter your <strong>Client ID</strong> and <strong>Client Secret</strong> to authorize this
-                        application.</p>
-                    <p class="text-xs text-muted">These keys are stored securely in your OS keychain.</p>
-
-                    <div style="margin-top: 20px;">
-                        <div style="margin-bottom: 15px;">
-                            <label style="display: block; margin-bottom: 5px; font-weight: 500;">Client ID</label>
-                            <input type="text" id="client-id-input" placeholder="12345...apps.googleusercontent.com"
-                                style="width: 100%; padding: 10px; border-radius: 6px; border: 1px solid rgba(255,255,255,0.1); background: rgba(0,0,0,0.2); color: white;">
-                        </div>
-
-                        <div style="margin-bottom: 15px;">
-                            <label style="display: block; margin-bottom: 5px; font-weight: 500;">Client Secret</label>
-                            <input type="password" id="client-secret-input" placeholder="GOCSPX-..."
-                                style="width: 100%; padding: 10px; border-radius: 6px; border: 1px solid rgba(255,255,255,0.1); background: rgba(0,0,0,0.2); color: white;">
-                        </div>
-
-                        <button id="save-auth-btn" class="btn btn-primary primary-btn" style="width: 100%;">Save &
-                            Connect Google
-                            Account</button>
-                        <p id="auth-status-msg" style="margin-top: 10px; font-size: 0.9em;"></p>
-                    </div>
-                </div>
-
-                <div class="card" style="margin-top: 20px;">
-                    <h3>User Preferences</h3>
-                    <p>Edit your preferences in <code>docs/CEO_USER_MANUAL.json</code></p>
-                </div>
-
-                <div class="card" style="margin-top: 20px;">
-                    <h3>Connection Status</h3>
-                    <div id="auth-status" class="status-indicator">
-                        <span class="dot" style="background:gray"></span> Disconnected
-                    </div>
-                </div>
+            <div class="card full-width">
+              <h3>Active Campaigns</h3>
+              <ul class="item-list" id="crm-list">
+                <!-- Injected -->
+              </ul>
             </div>
+          </div>
+        </div>
 
-            <div id="view-preferences" class="view hidden">
-                <h2>CEO User Manual</h2>
-                <pre id="pref-json"></pre>
+        <div id="view-settings" class="view hidden">
+          <h2>Production Settings</h2>
+
+          <div class="card full-width" style="margin-bottom: 20px">
+            <h3>Intelligence Settings</h3>
+            <div class="input-group" style="margin-bottom: 15px">
+              <label style="display: block; margin-bottom: 5px"
+                >LLM Provider</label
+              >
+              <select
+                id="llm-provider"
+                style="
+                  width: 100%;
+                  padding: 10px;
+                  background: rgba(0, 0, 0, 0.2);
+                  border: 1px solid rgba(255, 255, 255, 0.1);
+                  color: white;
+                  border-radius: 6px;
+                "
+              >
+                <option value="openai">OpenAI (GPT-4)</option>
+                <option value="gemini" disabled>
+                  Google Gemini (Coming Soon)
+                </option>
+              </select>
             </div>
+            <div class="input-group" style="margin-bottom: 15px">
+              <label style="display: block; margin-bottom: 5px">API Key</label>
+              <input
+                type="password"
+                id="llm-api-key"
+                placeholder="sk-..."
+                style="
+                  width: 100%;
+                  padding: 10px;
+                  background: rgba(0, 0, 0, 0.2);
+                  border: 1px solid rgba(255, 255, 255, 0.1);
+                  color: white;
+                  border-radius: 6px;
+                "
+              />
+            </div>
+            <div class="input-group">
+              <label style="display: block; margin-bottom: 5px"
+                >User Manual (Directives for AI)</label
+              >
+              <textarea
+                id="user-manual"
+                rows="4"
+                style="
+                  width: 100%;
+                  padding: 10px;
+                  background: rgba(0, 0, 0, 0.2);
+                  border: 1px solid rgba(255, 255, 255, 0.1);
+                  color: white;
+                  border-radius: 6px;
+                  font-family: inherit;
+                "
+              ></textarea>
+            </div>
+            <button
+              class="primary-btn"
+              id="save-prefs-btn"
+              style="margin-top: 15px; width: 100%"
+            >
+              Save Intelligence Settings
+            </button>
+          </div>
 
-        </main>
+          <div class="card">
+            <h3>Google Cloud Authorization</h3>
+            <p>
+              Enter your <strong>Client ID</strong> and
+              <strong>Client Secret</strong> to authorize this application.
+            </p>
+            <p class="text-xs text-muted">
+              These keys are stored securely in your OS keychain.
+            </p>
+
+            <div style="margin-top: 20px">
+              <div style="margin-bottom: 15px">
+                <label
+                  style="display: block; margin-bottom: 5px; font-weight: 500"
+                  >Client ID</label
+                >
+                <input
+                  type="text"
+                  id="client-id-input"
+                  placeholder="12345...apps.googleusercontent.com"
+                  style="
+                    width: 100%;
+                    padding: 10px;
+                    border-radius: 6px;
+                    border: 1px solid rgba(255, 255, 255, 0.1);
+                    background: rgba(0, 0, 0, 0.2);
+                    color: white;
+                  "
+                />
+              </div>
+
+              <div style="margin-bottom: 15px">
+                <label
+                  style="display: block; margin-bottom: 5px; font-weight: 500"
+                  >Client Secret</label
+                >
+                <input
+                  type="password"
+                  id="client-secret-input"
+                  placeholder="GOCSPX-..."
+                  style="
+                    width: 100%;
+                    padding: 10px;
+                    border-radius: 6px;
+                    border: 1px solid rgba(255, 255, 255, 0.1);
+                    background: rgba(0, 0, 0, 0.2);
+                    color: white;
+                  "
+                />
+              </div>
+
+              <button
+                id="save-auth-btn"
+                class="btn btn-primary primary-btn"
+                style="width: 100%"
+              >
+                Save & Connect Google Account
+              </button>
+              <p
+                id="auth-status-msg"
+                style="margin-top: 10px; font-size: 0.9em"
+              ></p>
+            </div>
+          </div>
+
+          <div class="card" style="margin-top: 20px">
+            <h3>User Preferences</h3>
+            <p>
+              Edit your preferences in <code>docs/CEO_USER_MANUAL.json</code>
+            </p>
+          </div>
+
+          <div class="card" style="margin-top: 20px">
+            <h3>Connection Status</h3>
+            <div id="auth-status" class="status-indicator">
+              <span class="dot" style="background: gray"></span> Disconnected
+            </div>
+          </div>
+        </div>
+
+        <div id="view-preferences" class="view hidden">
+          <h2>CEO User Manual</h2>
+          <pre id="pref-json"></pre>
+        </div>
+      </main>
     </div>
     <script src="renderer.js"></script>
-</body>
-
+  </body>
 </html>

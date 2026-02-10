@@ -6,6 +6,7 @@ This workflow builds the Electron application for distribution.
 
 1.  **Install Dependencies**
     Ensure all dependencies, including dev dependencies, are installed.
+
     ```bash
     npm install
     ```
@@ -13,6 +14,7 @@ This workflow builds the Electron application for distribution.
 2.  **Run Build**
     Execute the electron-builder process.
     // turbo
+
     ```bash
     npm run dist
     ```

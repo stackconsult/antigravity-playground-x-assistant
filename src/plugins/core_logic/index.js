@@ -8,22 +8,22 @@ const PreferenceManager = require('./preferences');
 const Sorter = require('./sorter');
 
 const CoreLogicPlugin = {
-    name: 'CEO_Assistant_Core_Logic',
+  name: 'CEO_Assistant_Core_Logic',
 
-    init: async (kernel) => {
-        console.log('[PLUGIN] Initializing Core Logic...');
+  init: async (kernel) => {
+    console.log('[PLUGIN] Initializing Core Logic...');
 
-        // Attach capabilities to the kernel
-        kernel.rules = RULES;
-        kernel.preferences = new PreferenceManager();
-        kernel.sorter = Sorter;
+    // Attach capabilities to the kernel
+    kernel.rules = RULES;
+    kernel.userManual = new PreferenceManager();
+    kernel.sorter = Sorter;
 
-        console.log('[PLUGIN] Core Logic Ready.');
-        console.log('[PLUGIN] North Star Principles Loaded:');
-        Object.values(RULES).forEach(rule => {
-            console.log(`  - ${rule.id}: ${rule.description}`);
-        });
-    }
+    console.log('[PLUGIN] Core Logic Ready.');
+    console.log('[PLUGIN] North Star Principles Loaded:');
+    Object.values(RULES).forEach((rule) => {
+      console.log(`  - ${rule.id}: ${rule.description}`);
+    });
+  },
 };
 
 module.exports = CoreLogicPlugin;

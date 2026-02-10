@@ -127,17 +127,17 @@ ipcMain.on('set-title', (event, title) => {
 ```javascript
 // Preload: Expose invoke
 contextBridge.exposeInMainWorld('electronAPI', {
-  openFile: () => ipcRenderer.invoke('dialog:openFile')
-})
+  openFile: () => ipcRenderer.invoke('dialog:openFile'),
+});
 
 // Main: Handle with return
 ipcMain.handle('dialog:openFile', async () => {
-  const { filePaths } = await dialog.showOpenDialog()
-  return filePaths[0]
-})
+  const { filePaths } = await dialog.showOpenDialog();
+  return filePaths[0];
+});
 
 // Renderer: Await response
-const path = await window.electronAPI.openFile()
+const path = await window.electronAPI.openFile();
 ```
 
 ### Pattern 3: Main → Renderer
@@ -1193,7 +1193,7 @@ contextBridge.exposeInMainWorld('electronAPI', {
 
 **Store in `.antigravity/skills/electron-production.md`**:
 
-````markdown
+`````markdown
 # Skill: Electron Production Deployment Pipeline
 
 ## Metadata
@@ -1216,11 +1216,14 @@ Complete workflow for packaging, signing, and distributing Electron apps with au
 
 ### 1. Native Module Handling
 
-```bash
+````bash
 npm install --save-dev @electron/rebuild
 ## Automatic rebuild in Forge
 ```text
 ````
+`````
+
+``````
 
 ### 2. Security Fuses
 
@@ -1289,14 +1292,16 @@ test('app launches', async () => {
 
 ### AGENTS.md Electron Configuration
 
-```markdown
+`````markdown
 ## Tech Stack
+
 - Runtime: Node.js 20+, Electron 32+
 - Frontend: Angular 17 / React 18
 - Packaging: Electron Forge
 - Testing: Playwright
 
 ## Allowed Operations
+
 - `npm run package` / `npm run make`
 - `@electron/rebuild` execution
 - `@electron/fuses` configuration
@@ -1304,24 +1309,26 @@ test('app launches', async () => {
 - Code signing with environment credentials
 
 ## Forbidden Actions
+
 - Manual binary patching
 - Disabling security fuses without justification
 - Skipping code signing in production builds
 - Loading remote content without HTTPS + CSP
 
 ## Verification Artifacts
+
 - Screenshots of packaged app on macOS/Windows/Linux
 - Code signing validation output
 - Fuse configuration readout
 - Playwright test results with coverage
 - Update server response validation
-```text`
+  ```text`
 
 ### CI/CD Pipeline for Agents
 
 **GitHub Actions Workflow**:
 
-```yaml
+`````yaml
 name: Build & Release Electron App
 
 on:
@@ -1728,7 +1735,9 @@ This defines the structural laws your agents must follow when scaffolding.
     runTask: (id: string) => ipcRenderer.invoke('task:run', id),
     onStatus: (cb) => ipcRenderer.on('task:status', cb),
   });
-  ```
+``````
+
+`````
 
 ## Layer 3: The Orchestrator (Main)
 
@@ -1748,7 +1757,7 @@ This defines the structural laws your agents must follow when scaffolding.
 - **Path**: `/docker` or `app.getPath('userData')`
 - **Storage**: SQLite for app state. Docker for vector/relational data.
 - **Backup**: Automated dumps to JSON artifacts.
-```text`
+  ```text`
 
 ---
 
@@ -1756,7 +1765,7 @@ This defines the structural laws your agents must follow when scaffolding.
 
 This ensures your agents never violate security or reliability principles.
 
-```markdown
+````markdown
 ## CONSTITUTION.md - Development Constraints
 
 ## 1. The Lethal Trifecta (PREVENTION)
@@ -1785,7 +1794,8 @@ NEVER allow a build that combines:
 
 - The app must function without internet.
 - AI features gracefully degrade or switch to local models (Ollama) if offline.
-```text
+
+````text
 
 ---
 
@@ -1975,4 +1985,6 @@ You now have a **Universally Versatile** factory for building enterprise-grade a
 [^3_2]: <https://github.com/amafjarkasi/electron-mcp-server>
 
 [^4_1]: antigravity-professional-use-case.md
-
+````
+````
+`````

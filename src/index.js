@@ -4,10 +4,12 @@
  * Status: PRODUCTION MASTER
  */
 
-const TripPlanner = require('./plugins/trip_planner');
+require('dotenv').config(); // Load env vars immediately
+
 const AuthManager = require('./plugins/auth_manager');
 const OutboundSequencer = require('./plugins/outbound_sequencer');
-const PreferencesManager = require('./plugins/preferences');
+const PreferencesManager = require('./plugins/preferences'); // System Config
+const CoreLogicPlugin = require('./plugins/core_logic'); // User Manual & Rules
 const IntelligenceManager = require('./plugins/intelligence');
 
 const fs = require('fs');
@@ -16,12 +18,15 @@ const path = require('path');
 class AntigravityKernel {
   constructor(config = {}) {
     this.config = config;
-    this.use(AuthManager);
-    this.use(OutboundSequencer);
-    this.use(PreferencesManager);
-    this.use(IntelligenceManager);
     this.plugins = [];
     this.isBooted = false;
+
+    // Order matters: System Config first
+    this.use(PreferencesManager);
+    this.use(CoreLogicPlugin);
+    this.use(AuthManager);
+    this.use(OutboundSequencer);
+    this.use(IntelligenceManager);
   }
 
   /**

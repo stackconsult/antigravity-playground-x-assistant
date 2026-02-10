@@ -20,17 +20,16 @@ import { contextBridge, ipcRenderer } from 'electron';
 export interface IElectronAPI {
   // Command: Invoke a main process function and await result
   runTask: (taskName: string, args: any) => Promise<any>;
-  
+
   // Event: Listen for updates from Main
   onUpdate: (callback: (event: any, value: any) => void) => void;
 }
 
 // 2. Expose the API securely
 contextBridge.exposeInMainWorld('electronAPI', {
-  runTask: (taskName: string, args: any) => ipcRenderer.invoke(
-    'run-task', taskName, args
-  ),
-  onUpdate: (callback: any) => ipcRenderer.on('task-update', callback)
+  runTask: (taskName: string, args: any) =>
+    ipcRenderer.invoke('run-task', taskName, args),
+  onUpdate: (callback: any) => ipcRenderer.on('task-update', callback),
 });
 ```
 
@@ -45,10 +44,10 @@ import { app, BrowserWindow, ipcMain } from 'electron';
 app.whenReady().then(() => {
   ipcMain.handle('run-task', async (event, taskName, args) => {
     console.log(`[Main] Task Invoked: ${taskName}`, args);
-    
+
     // SAFETY CHECK: Validate taskName against allowed list
     if (taskName === 'ping') return 'pong';
-    
+
     // TODO: Spawn Sidecar process here (see sidecar_manager skill)
     return { status: 'error', message: 'Unknown task' };
   });
