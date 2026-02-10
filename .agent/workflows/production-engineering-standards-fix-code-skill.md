@@ -1,7 +1,5 @@
 ---
-name: Production Engineering Standards (Fix Code Skill)
-description: A formalized skill for fixing code issues with production-grade rigor.
-version: 1.0.1
+description: Production Engineering Standards (Fix Code Skill) description: A formalized skill for fixing code issues with production-grade
 ---
 
 # Production Engineering Standards: Code Fix Protocol
@@ -35,9 +33,8 @@ This skill details the exact procedure an Antigravity Agent must follow when res
    - **Format**: Run `npm run format` to ensure style compliance.
 
 3. **Order of Operations**:
-   - **Initialization**: Ensure properties (`this.plugins = []`) are initialized _before_ usage.
-   - **Environment**: Ensure Environment Variables are loaded _before_ config usage.
-   - **Automatic Formatting**: Run `npm run format` (or equivalent) immediately after _any_ file edit to ensure zero lint regressions.
+   - For Classes/Kernels: Ensure properties (`this.plugins = []`) are initialized _before_ usage.
+   - For Configs: Ensure Environment Variables are loaded _before_ config usage.
 
 ## Phase 3: Verification (The "Double-Check")
 
@@ -54,3 +51,11 @@ This skill details the exact procedure an Antigravity Agent must follow when res
 1. **Stage**: `git add .`
 2. **Commit**: `git commit -m "fix(scope): <clear description of fix>"`
 3. **Push**: `git push origin <branch>`
+
+## Example Scenario: Fixing a Kernel Crash
+
+- **Error**: `TypeError: Cannot read properties of undefined (reading 'push')`
+- **Analysis**: `this.plugins` is used before definition.
+- **Fix**: Move `this.plugins = []` to top of constructor.
+- **Verify**: Run `node src/index.js` -> Success.
+- **Commit**: `fix(kernel): initialize plugins array before usage`.

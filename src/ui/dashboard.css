@@ -282,3 +282,66 @@ h1 {
   padding: 6px 12px;
   font-size: 0.8rem;
 }
+
+/* Utilities */
+.mt-20 {
+  margin-top: 20px;
+}
+
+.mb-15 {
+  margin-bottom: 15px;
+}
+
+.mb-20 {
+  margin-bottom: 20px;
+}
+
+.w-100 {
+  width: 100%;
+}
+
+.d-block {
+  display: block;
+}
+
+.flex-gap-10 {
+  display: flex;
+  gap: 10px;
+}
+
+.flex-1 {
+  flex: 1;
+}
+
+/* Form Controls */
+.form-control {
+  padding: 8px;
+  background: #333;
+  border: 1px solid #444;
+  color: white;
+  border-radius: 4px;
+}
+
+.settings-input {
+  width: 100%;
+  padding: 10px;
+  background: rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: white;
+  border-radius: 6px;
+  font-family: inherit;
+}
+
+.label-main {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: 500;
+}
+
+.text-xs {
+  font-size: 0.75rem;
+}
+
+.text-muted {
+  color: var(--text-muted);
+}

@@ -15,7 +15,7 @@ const OutboundSequencer = require('../plugins/outbound_sequencer');
 const IPCHandlers = {
   kernel: null,
 
-  init: async (window) => {
+  init: async () => {
     console.log('[ELECTRON] Initializing Kernel for IPC...');
 
     // Boot the Kernel inside the Main Process

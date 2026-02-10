@@ -33,6 +33,6 @@ This workflow implements the `production_engineering` skill for resolving code i
 
 **Success Criteria:**
 
-* Zero lint errors.
-* Zero runtime crashes.
-* Zero regression in tests.
+- Zero lint errors.
+- Zero runtime crashes.
+- Zero regression in tests.

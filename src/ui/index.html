@@ -27,7 +27,7 @@
         <header>
           <h1 id="page-title">Morning Pulse</h1>
           <div class="status-indicator" id="auth-status">
-            <span class="dot" style="background: gray"></span> Disconnected
+            <span class="dot"></span> Disconnected
           </div>
           <button class="secondary-btn" id="btn-calendar">📅 Calendar</button>
         </header>
@@ -61,7 +61,7 @@
               <div class="item-list" id="daily-brief-text">
                 Waiting for pulse...
               </div>
-              <div style="margin-top: 20px">
+              <div class="mt-20">
                 <button class="primary-btn" id="btn-run-pulse">
                   RUN DAILY PULSE
                 </button>
@@ -83,42 +83,25 @@
           <div class="dashboard-grid">
             <div class="card full-width">
               <h3>Add to Campaign</h3>
-              <div style="display: flex; gap: 10px; margin-top: 10px">
+              <div class="flex-gap-10 mt-20">
                 <input
                   type="email"
                   id="crm-email"
                   placeholder="Email"
-                  style="
-                    flex: 1;
-                    padding: 8px;
-                    background: #333;
-                    border: 1px solid #444;
-                    color: white;
-                    border-radius: 4px;
-                  "
+                  title="CRM Email Address"
+                  class="form-control flex-1"
                 />
                 <input
                   type="text"
                   id="crm-name"
                   placeholder="Name"
-                  style="
-                    flex: 1;
-                    padding: 8px;
-                    background: #333;
-                    border: 1px solid #444;
-                    color: white;
-                    border-radius: 4px;
-                  "
+                  title="CRM Contact Name"
+                  class="form-control flex-1"
                 />
                 <select
                   id="crm-type"
-                  style="
-                    padding: 8px;
-                    background: #333;
-                    border: 1px solid #444;
-                    color: white;
-                    border-radius: 4px;
-                  "
+                  title="CRM Outreach Type"
+                  class="form-control"
                 >
                   <option value="investor_outreach">Investor Outreach</option>
                   <option value="sales_cold">Sales Cold</option>
@@ -139,22 +122,14 @@
         <div id="view-settings" class="view hidden">
           <h2>Production Settings</h2>
 
-          <div class="card full-width" style="margin-bottom: 20px">
+          <div class="card full-width mb-20">
             <h3>Intelligence Settings</h3>
-            <div class="input-group" style="margin-bottom: 15px">
-              <label style="display: block; margin-bottom: 5px"
-                >LLM Provider</label
-              >
+            <div class="input-group mb-15">
+              <label class="label-main">LLM Provider</label>
               <select
                 id="llm-provider"
-                style="
-                  width: 100%;
-                  padding: 10px;
-                  background: rgba(0, 0, 0, 0.2);
-                  border: 1px solid rgba(255, 255, 255, 0.1);
-                  color: white;
-                  border-radius: 6px;
-                "
+                title="AI Language Model Provider"
+                class="settings-input"
               >
                 <option value="openai">OpenAI (GPT-4)</option>
                 <option value="gemini" disabled>
@@ -162,45 +137,26 @@
                 </option>
               </select>
             </div>
-            <div class="input-group" style="margin-bottom: 15px">
-              <label style="display: block; margin-bottom: 5px">API Key</label>
+            <div class="input-group mb-15">
+              <label class="label-main">API Key</label>
               <input
                 type="password"
                 id="llm-api-key"
                 placeholder="sk-..."
-                style="
-                  width: 100%;
-                  padding: 10px;
-                  background: rgba(0, 0, 0, 0.2);
-                  border: 1px solid rgba(255, 255, 255, 0.1);
-                  color: white;
-                  border-radius: 6px;
-                "
+                title="Provider API Key"
+                class="settings-input"
               />
             </div>
             <div class="input-group">
-              <label style="display: block; margin-bottom: 5px"
-                >User Manual (Directives for AI)</label
-              >
+              <label class="label-main">User Manual (Directives for AI)</label>
               <textarea
                 id="user-manual"
                 rows="4"
-                style="
-                  width: 100%;
-                  padding: 10px;
-                  background: rgba(0, 0, 0, 0.2);
-                  border: 1px solid rgba(255, 255, 255, 0.1);
-                  color: white;
-                  border-radius: 6px;
-                  font-family: inherit;
-                "
+                title="Instructions for the AI Assistant"
+                class="settings-input"
               ></textarea>
             </div>
-            <button
-              class="primary-btn"
-              id="save-prefs-btn"
-              style="margin-top: 15px; width: 100%"
-            >
+            <button class="primary-btn mt-20 w-100" id="save-prefs-btn">
               Save Intelligence Settings
             </button>
           </div>
@@ -215,58 +171,33 @@
               These keys are stored securely in your OS keychain.
             </p>
 
-            <div style="margin-top: 20px">
-              <div style="margin-bottom: 15px">
-                <label
-                  style="display: block; margin-bottom: 5px; font-weight: 500"
-                  >Client ID</label
-                >
+            <div class="mt-20">
+              <div class="mb-15">
+                <label class="label-main">Client ID</label>
                 <input
                   type="text"
                   id="client-id-input"
                   placeholder="12345...apps.googleusercontent.com"
-                  style="
-                    width: 100%;
-                    padding: 10px;
-                    border-radius: 6px;
-                    border: 1px solid rgba(255, 255, 255, 0.1);
-                    background: rgba(0, 0, 0, 0.2);
-                    color: white;
-                  "
+                  title="Google OAuth Client ID"
+                  class="settings-input"
                 />
               </div>
 
-              <div style="margin-bottom: 15px">
-                <label
-                  style="display: block; margin-bottom: 5px; font-weight: 500"
-                  >Client Secret</label
-                >
+              <div class="mb-15">
+                <label class="label-main">Client Secret</label>
                 <input
                   type="password"
                   id="client-secret-input"
                   placeholder="GOCSPX-..."
-                  style="
-                    width: 100%;
-                    padding: 10px;
-                    border-radius: 6px;
-                    border: 1px solid rgba(255, 255, 255, 0.1);
-                    background: rgba(0, 0, 0, 0.2);
-                    color: white;
-                  "
+                  title="Google OAuth Client Secret"
+                  class="settings-input"
                 />
               </div>
 
-              <button
-                id="save-auth-btn"
-                class="btn btn-primary primary-btn"
-                style="width: 100%"
-              >
+              <button id="save-auth-btn" class="primary-btn w-100">
                 Save & Connect Google Account
               </button>
-              <p
-                id="auth-status-msg"
-                style="margin-top: 10px; font-size: 0.9em"
-              ></p>
+              <p id="auth-status-msg" class="mt-20 text-xs"></p>
             </div>
           </div>
 
@@ -277,10 +208,10 @@
             </p>
           </div>
 
-          <div class="card" style="margin-top: 20px">
+          <div class="card mt-20">
             <h3>Connection Status</h3>
             <div id="auth-status" class="status-indicator">
-              <span class="dot" style="background: gray"></span> Disconnected
+              <span class="dot"></span> Disconnected
             </div>
           </div>
         </div>
