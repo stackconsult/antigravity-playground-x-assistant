@@ -29,6 +29,7 @@
                 <div class="status-indicator">
                     <span class="dot"></span> System Online
                 </div>
+                <button id="btn-calendar" class="secondary-btn" style="margin-left: auto;">📅 Calendar</button>
             </header>
 
             <!-- Dynamic Views -->
@@ -62,7 +63,7 @@
                 <div id="trip-list" class="trip-grid"></div>
             </div>
 
-            <div id="settings-content" class="content-section" style="display: none;">
+            <div id="view-settings" class="view hidden">
                 <h2>Production Settings</h2>
                 <div class="card">
                     <h3>Google Cloud Authorization</h3>
@@ -83,7 +84,8 @@
                                 style="width: 100%; padding: 10px; border-radius: 6px; border: 1px solid rgba(255,255,255,0.1); background: rgba(0,0,0,0.2); color: white;">
                         </div>
 
-                        <button id="save-auth-btn" class="btn btn-primary" style="width: 100%;">Save & Connect Google
+                        <button id="save-auth-btn" class="btn btn-primary primary-btn" style="width: 100%;">Save &
+                            Connect Google
                             Account</button>
                         <p id="auth-status-msg" style="margin-top: 10px; font-size: 0.9em;"></p>
                     </div>
@@ -93,6 +95,13 @@
                     <h3>User Preferences</h3>
                     <p>Edit your preferences in <code>docs/CEO_USER_MANUAL.json</code></p>
                 </div>
+
+                <div class="card" style="margin-top: 20px;">
+                    <h3>Connection Status</h3>
+                    <div id="auth-status" class="status-indicator">
+                        <span class="dot" style="background:gray"></span> Disconnected
+                    </div>
+                </div>
             </div>
 
             <div id="view-preferences" class="view hidden">
@@ -100,18 +109,6 @@
                 <pre id="pref-json"></pre>
             </div>
 
-            <div id="view-settings" class="view hidden">
-                <h2>Integrations</h2>
-                <div class="card">
-                    <h3>Google Workspace</h3>
-                    <p class="subtext">Connect Gmail and Calendar to enable real-time features.</p>
-                    <div id="auth-status" class="status-indicator">
-                        <span class="dot" style="background:gray"></span> Disconnected
-                    </div>
-                    <button id="btn-auth-google" class="primary-btn" style="margin-top:15px">Connect Google
-                        Account</button>
-                </div>
-            </div>
         </main>
     </div>
     <script src="renderer.js"></script>

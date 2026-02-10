@@ -50,7 +50,8 @@ body {
     color: var(--text-muted);
 }
 
-.nav-links li:hover, .nav-links li.active {
+.nav-links li:hover,
+.nav-links li.active {
     background-color: rgba(187, 134, 252, 0.1);
     color: var(--primary);
 }
@@ -69,7 +70,10 @@ header {
     margin-bottom: 30px;
 }
 
-h1 { margin: 0; font-weight: 300; }
+h1 {
+    margin: 0;
+    font-weight: 300;
+}
 
 .status-indicator {
     display: flex;
@@ -95,14 +99,16 @@ h1 { margin: 0; font-weight: 300; }
     margin-top: 20px;
 }
 
-.full-width { grid-column: span 2; }
+.full-width {
+    grid-column: span 2;
+}
 
 /* Cards */
 .card {
     background-color: var(--bg-card);
     padding: 25px;
     border-radius: 12px;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
 }
 
 .metric {
@@ -128,7 +134,9 @@ h1 { margin: 0; font-weight: 300; }
     transition: transform 0.1s;
 }
 
-.primary-btn:active { transform: scale(0.98); }
+.primary-btn:active {
+    transform: scale(0.98);
+}
 
 /* Lists */
 .item-list {
@@ -151,4 +159,75 @@ h1 { margin: 0; font-weight: 300; }
     background: #333;
 }
 
-.view.hidden { display: none; }
+.view.hidden {
+    display: none;
+}
+
+/* Secondary Button (Calendar) */
+.secondary-btn {
+    background: transparent;
+    border: 1px solid var(--secondary);
+    padding: 8px 16px;
+    color: var(--secondary);
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: all 0.2s;
+}
+
+.secondary-btn:hover {
+    background: rgba(3, 218, 198, 0.1);
+}
+
+/* Email Item Layout */
+.item-list li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px;
+}
+
+.email-content {
+    flex: 1;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin-right: 10px;
+}
+
+.email-actions {
+    display: flex;
+    gap: 8px;
+    opacity: 0.5;
+    transition: opacity 0.2s;
+}
+
+.item-list li:hover .email-actions {
+    opacity: 1;
+}
+
+.action-btn {
+    background: #333;
+    border: none;
+    color: #fff;
+    width: 28px;
+    height: 28px;
+    border-radius: 4px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+}
+
+.action-btn:hover {
+    background: var(--primary);
+}
+
+.action-btn.archive:hover {
+    background: var(--secondary);
+}
+
+.action-btn.delete:hover {
+    background: var(--danger);
+}

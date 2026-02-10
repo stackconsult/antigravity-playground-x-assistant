@@ -14,6 +14,14 @@ const clientSecretInput = document.getElementById('client-secret-input');
 const authStatusMsg = document.getElementById('auth-status-msg');
 const btnAuthGoogle = document.getElementById('btn-auth-google');
 const statusDiv = document.getElementById('auth-status');
+const btnCalendar = document.getElementById('btn-calendar');
+
+// Calendar Button Logic
+if (btnCalendar) {
+    btnCalendar.addEventListener('click', () => {
+        alert('📅 Opening Calendar View...\n(Integration coming in Phase 3)');
+    });
+}
 
 // Navigation Logic
 navLinks.forEach(link => {
@@ -69,7 +77,31 @@ function renderPulse(data) {
         inboxList.innerHTML = '';
         data.emails.forEach(email => {
             const li = document.createElement('li');
-            li.innerHTML = `<span class="tag">${email.label}</span> ${email.subject}`;
+            li.innerHTML = `
+                <div class="email-content">
+                    <span class="tag">${email.label}</span> ${email.subject}
+                </div>
+                <div class="email-actions">
+                    <button class="action-btn archive" title="Archive">✔</button>
+                    <button class="action-btn delete" title="Delete">✖</button>
+                </div>
+            `;
+
+            // Add interactions
+            li.querySelector('.archive').addEventListener('click', (e) => {
+                e.stopPropagation();
+                li.style.transform = 'scale(0.95)';
+                li.style.opacity = '0';
+                setTimeout(() => li.remove(), 300);
+            });
+
+            li.querySelector('.delete').addEventListener('click', (e) => {
+                e.stopPropagation();
+                li.style.transform = 'translateX(20px)';
+                li.style.opacity = '0';
+                setTimeout(() => li.remove(), 300);
+            });
+
             inboxList.appendChild(li);
         });
     }
