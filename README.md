@@ -56,7 +56,7 @@ folder.
    - Grant the requested permissions.
 5. **Status**: The app will show "Authenticated" upon success.
 
-_(Credentials are stored securely in your system's User Data directory)_
+Credentials are stored securely in your system's User Data directory.
 
 ## 🛠 Setup & Installation
 
