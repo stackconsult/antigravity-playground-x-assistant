@@ -8,18 +8,28 @@ This document defines the end-to-end lifecycle for professional automation proje
 
 - **Goal**: Establish the "Golden Gate" safety and awareness baseline.
 - **Workflow**:
-  1.  **Environment Sync**: Run `node -v` and `npm install`.
-  2.  **Kernel Load**: Read `AGENTS.md` and check **Product Vision**.
-  3.  **Integrity Verification**: Execute `Skill 6: integrity_check`.
+  1. **Environment Sync**: Run `node -v` and `npm install`.
+  2. **Kernel Load**: Read `AGENTS.md` and check **Product Vision**.
+  3. **Integrity Verification**: Execute `Skill 6: integrity_check`.
 - **Exit Condition**: 100% Green check; non-empty Product Vision.
 
 ## Phase 0.5: Tooling Verification (Pre-CI Check)
 
 - **Goal**: Prevent avoidable CI failures (The "Lockfile Law").
 - **Workflow**:
-  1.  **Lockfile**: Ensure `package-lock.json` exists and is synced (`npm install --package-lock-only`).
-  2.  **Linter**: Verify `eslint.config.js` is V9 compliant.
-  3.  **Local Test**: Run `npm run lint` && `npm run format` locally before ANY push.
+  1. **Lockfile**: Ensure `package-lock.json` exists and is synced (`npm install --package-lock-only`).
+  2. **Linter**: Verify `eslint.config.js` is V9 compliant.
+  3. **Local Test**: Run `npm run lint` && `npm run format` locally before ANY push.
+
+## Phase 0.6: Emergency Fix Protocol (Production Engineering)
+
+- **Goal**: Resolve bugs with zero regression using strict standards.
+- **Trigger**: Commit failure, crash, or `npm test` failure.
+- **Workflow**:
+  1. **Stop**: Do not randomly edit files.
+  2. **Execute**: Run `.agent/workflows/fix_code.md` (Skill 7).
+  3. **Verify**: Ensure runtime boot and tests pass.
+  4. **Resolve**: Commit only verified fixes.
 
 ## 1. Ideation & Planning (Agent/Human Loop)
 

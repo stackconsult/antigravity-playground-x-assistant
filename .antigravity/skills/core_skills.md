@@ -136,3 +136,17 @@ grep -q "Vision: DEFINED" AGENTS.md && echo "✅ VISION: DEFINED" || echo "⚠�
 
 echo "=== System 100% Operational ==="
 ```
+
+---
+
+## Skill 7: `production_fix`
+
+**Trigger:** Any error, bug, crash, or lint failure.
+
+**Action:** Execute the rigorous fix protocol defined in `.antigravity/skills/production_engineering.md`.
+
+1. **Analyze**: Root cause analysis (don't guess).
+2. **Verify**: Dependencies (package.json) and Linter.
+3. **Fix**: Apply code change.
+4. **Validate**: Run runtime check AND test suite.
+5. **Commit**: Use conventional commits.
