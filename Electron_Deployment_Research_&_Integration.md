@@ -1,14 +1,15 @@
-<img src="https://r2cdn.perplexity.ai/pplx-full-logo-primary-dark%402x.png" style="height:64px;margin-right:32px"/>
+# Electron for UI Deployments: Deep Research & Antigravity IDE Integration Analysis
 
-# Electron for UI Deployments: Deep Research \& Antigravity IDE Integration Analysis
-
-Based on comprehensive research of Electron's official documentation and your Antigravity IDE framework, I've analyzed Electron as a universally versatile deployment option for your automation consulting builds.
+Based on comprehensive research of Electron's official documentation and your
+Antigravity IDE framework, I've analyzed Electron as a universally versatile
+deployment option for your automation consulting builds.
 
 ## Executive Summary: Electron Fit Assessment
 
 **A) Is Electron a Fit for You?** ✅ **YES - Highly Recommended**
 
-Electron aligns exceptionally well with your profile as an automation consultant building agents and MCP databases. It provides:
+Electron aligns exceptionally well with your profile as an automation consultant
+building agents and MCP databases. It provides:
 
 - **Cross-platform deployment** (Windows, macOS, Linux) from single codebase
 - **Native desktop capabilities** with familiar web technologies
@@ -18,7 +19,7 @@ Electron aligns exceptionally well with your profile as an automation consultant
 
 **B) Is Electron Better Than Everything Else?** ⚖️ **Context-Dependent**
 
-**Choose Electron When:**
+### Choose Electron When
 
 - Building B2B automation tools requiring desktop presence
 - Need filesystem access, system integrations, native APIs
@@ -26,7 +27,7 @@ Electron aligns exceptionally well with your profile as an automation consultant
 - Clients need offline functionality or data privacy
 - Building cross-platform with single codebase priority
 
-**Choose Alternatives When:**
+#### Choose Alternatives When
 
 - Pure web apps (use standard web stack)
 - Small disk footprint critical (<80MB is hard requirement)
@@ -44,7 +45,7 @@ Electron aligns exceptionally well with your profile as an automation consultant
 
 Electron inherits Chromium's multi-process architecture:[^1_1]
 
-**Main Process (Node.js environment)**
+#### Main Process (Node.js environment)
 
 - Single process per app - application entry point
 - Controls lifecycle via `app` module
@@ -52,21 +53,21 @@ Electron inherits Chromium's multi-process architecture:[^1_1]
 - Native API access (menus, dialogs, system tray)
 - Privileged operations coordinator
 
-**Renderer Processes (Web environment)**
+#### Renderer Processes (Web environment)
 
 - One per `BrowserWindow` - isolated sandboxed processes
 - Runs HTML/CSS/JavaScript like web pages
 - No direct Node.js/Electron API access (security)
 - Communicates with main via IPC
 
-**Preload Scripts (Bridge layer)**
+#### Preload Scripts (Bridge layer)
 
 - Executes before renderer content loads
 - Has Node.js API access + renderer context
 - Uses `contextBridge` to safely expose APIs[^1_2]
 - Enables secure main ↔ renderer communication
 
-**Utility Processes (Node.js environment)**
+#### Utility Processes (Node.js environment)
 
 - Optional child processes from main[^1_1]
 - For CPU-intensive tasks, crash-prone components
@@ -132,7 +133,7 @@ contextBridge.exposeInMainWorld('electronAPI', {
 // Main: Handle with return
 ipcMain.handle('dialog:openFile', async () => {
   const { filePaths } = await dialog.showOpenDialog()
-  return filePaths[^1_0]
+  return filePaths[0]
 })
 
 // Renderer: Await response
@@ -154,32 +155,32 @@ contextBridge.exposeInMainWorld('electronAPI', {
 
 ---
 
-## Packaging \& Distribution
+## Packaging & Distribution
 
 ### Electron Forge (Recommended Tool)[^1_6]
 
-**Setup:**
+#### Setup
 
 ```bash
 npm install --save-dev @electron-forge/cli
 npx electron-forge import
 ```
 
-**Build Process:**
+#### Build Process
 
 ```bash
 npm run make  # Creates distributables
 ```
 
-**Output Structure:**
+#### Output Structure
 
-```
+```text
 out/
 ├── make/zip/darwin/x64/app-darwin-x64-1.0.0.zip
 └── app-darwin-x64/app.app/Contents/MacOS/app
 ```
 
-**Platform-Specific Formats:**
+#### Platform-Specific Formats
 
 - **Windows**: MSI installers, Squirrel (auto-update)
 - **macOS**: DMG, .app bundles (requires code signing)
@@ -197,7 +198,7 @@ out/
 
 ### Key Recommendations:[^1_7]
 
-**1. Lazy Module Loading**
+#### 1. Lazy Module Loading
 
 ```javascript
 // Bad: Load upfront
@@ -210,25 +211,25 @@ async getParsedFiles() {
 }
 ```
 
-**2. Bundle Your Code**
+#### 2. Bundle Your Code
 
 - Use webpack/rollup/parcel
 - Single file reduces `require()` overhead
 - 50-200ms savings on startup
 
-**3. Avoid Blocking Main Process**
+#### 3. Avoid Blocking Main Process
 
 - Use worker threads for CPU-heavy tasks
 - Async I/O operations only
 - Never `ipcRenderer.sendSync()`[^1_7]
 
-**4. Remove Unnecessary Polyfills**
+#### 4. Remove Unnecessary Polyfills
 
 - Electron bundles latest Chromium
 - No need for jQuery, babel-polyfill for modern features
 - Check caniuse.com for Chromium version
 
-**5. Bundle Static Resources**
+#### 5. Bundle Static Resources
 
 - Include fonts/images locally vs CDN
 - Faster load, offline support
@@ -248,7 +249,7 @@ Menu.setApplicationMenu(null); // Before app.ready
 
 ### Perfect Synergy Points
 
-**1. Agent-First Development Model**[^1_1][^1_3]
+**1. Agent-First Development Model**[^1_1] [^1_3]
 
 Antigravity's agent orchestration maps beautifully to Electron:
 
@@ -296,9 +297,9 @@ Configure `.antigravity/config.json`:
 
 ### Phase 1: Project Initialization (ASDLC Explore)
 
-**Prompt to Planning Agent:**
+#### Prompt to Planning Agent
 
-```
+```text
 Create an Electron desktop app for [your automation tool]:
 - Main process: Handle file operations, system integration
 - Renderer: Angular dashboard with Material UI
@@ -307,7 +308,7 @@ Create an Electron desktop app for [your automation tool]:
 - Tech stack: Electron 32+, Angular 17, TypeScript
 ```
 
-**Agent Produces:**
+#### Agent Produces
 
 - `PLAN.md` with architecture decisions
 - Directory structure matching Electron conventions
@@ -315,7 +316,7 @@ Create an Electron desktop app for [your automation tool]:
 
 ### Phase 2: Implementation (ASDLC Plan → Execute)
 
-**AGENTS.md Kernel Configuration:**
+#### AGENTS.md Kernel Configuration
 
 ```markdown
 ## Product Vision
@@ -336,7 +337,7 @@ B2B automation tool as Electron desktop app
 - Loading untrusted remote content
 ```
 
-**Multi-Agent Execution:**
+### Multi-Agent Execution
 
 1. **Coding Agent** → Generates main.js, preload.js, renderer code
 2. **UI Agent** → Creates Angular components in renderer
@@ -344,7 +345,7 @@ B2B automation tool as Electron desktop app
 
 ### Phase 3: Verification (ASDLC Reflect)
 
-**Artifacts Generated:**
+#### Artifacts Generated
 
 - Screenshots of packaged app on each platform
 - Browser recordings of IPC communication flows
@@ -353,7 +354,7 @@ B2B automation tool as Electron desktop app
 
 ### Phase 4: Skill Crystallization
 
-**Store in `.antigravity/skills/electron-ipc-pattern.md`:**
+#### Store in `.antigravity/skills/electron-ipc-pattern.md`
 
 ```markdown
 # Skill: Secure Electron IPC Pattern
@@ -423,7 +424,7 @@ Safe pattern for renderer ↔ main communication
 - **Node-pty** (terminal automation integration)
 - **@electron/remote** (use sparingly, security risk)
 
-### Build \& Deployment
+### Build & Deployment
 
 - **Electron Forge** (packaging/distribution)
 - **electron-builder** (alternative packager)
@@ -457,9 +458,13 @@ Safe pattern for renderer ↔ main communication
 
 ### Immediate (This Week)
 
-1. **Create Electron Skill** in `.antigravity/skills/electron-scaffold.md`
+1. **Create Electron Skill** in
+   `.antigravity/skills/electron-scaffold.md`
+
 2. **Update AGENTS.md** with Electron as allowed tech stack
-3. **Whitelist commands** in CONSTITUTION.md: `electron`, `electron-forge`, `npm run make`
+3. **Whitelist commands** in CONSTITUTION.md: `electron`, `electron-forge`,
+   `npm run make`
+
 4. **Build POC**: Simple automation tool with Antigravity → Electron workflow
 
 ### Short-Term (This Month)
@@ -478,62 +483,44 @@ Safe pattern for renderer ↔ main communication
 
 ---
 
-## Conclusion \& Recommendation
+## Conclusion & Recommendation
 
 **Electron is an EXCELLENT fit for your automation consulting business** because:
 
 ✅ **Aligns with your expertise**: Web tech (Angular/React) you know
 ✅ **Enables offline B2B tools**: Critical for enterprise clients
-✅ **Integrates seamlessly with Antigravity**: Agent-first development perfect for Electron's complexity
+✅ **Integrates seamlessly with Antigravity**: Agent-first development perfect
+for Electron's complexity
 ✅ **Cross-platform efficiency**: Single codebase = 3 platforms
 ✅ **Enterprise credibility**: VSCode/Slack validation
 ✅ **Node.js ecosystem**: Full access to automation libraries
 
-**Make Electron your default for:**
+### Make Electron your default for
 
 - Desktop automation dashboards
 - Agent orchestration interfaces
 - Local-first data tools
 - System integration utilities
 
-**Avoid Electron for:**
+#### Avoid Electron for
 
 - Public web apps (use web stack)
 - Mobile-first experiences (use RN/Flutter)
 - Ultra-lightweight tools (<10MB requirement)
 
-**Your competitive advantage**: Combining Antigravity's agent-orchestration with Electron's desktop capabilities creates a unique offering — "AI-Built, Enterprise-Grade Desktop Automation Tools" that competitors can't easily replicate.
-
-Ready to proceed to Phase 2 research on native Node modules, distribution, testing, and debugging components?
-<span style="display:none">[^1_10][^1_9]</span>
-
-<div align="center">⁂</div>
-
-[^1_1]: Antigravity-fullstack-use-cases.md
-
-[^1_2]: Antigravity-Front-end-ui-use-case.docx
-
-[^1_3]: antigravity-proffsional-use-case.md
-
-[^1_4]: setup.js.pdf
-
-[^1_5]: CONSTITUTION.md
-
-[^1_6]: ARCHITECTURE.md
-
-[^1_7]: TASKS.md
-
-[^1_8]: AGENTS.md
-
-[^1_9]: README.md
-
-[^1_10]: package.json
+**Your competitive advantage**: Combining Antigravity's agent-orchestration with
+Electron's desktop capabilities creates a unique offering — "AI-Built,
+Enterprise-Grade Desktop Automation Tools" that competitors can't easily
+replicate.
 
 ---
 
-# Electron Phase 2: Development, Node Modules, Distribution, Testing \& Debugging
+## Electron Phase 2: Development, Node Modules, Distribution, Testing & Debugging
 
-Based on comprehensive research of Electron's advanced documentation, I've analyzed the critical components for production deployment, native module integration, testing infrastructure, and debugging workflows—all calibrated for Antigravity IDE integration.
+Based on comprehensive research of Electron's advanced documentation, I've
+analyzed the critical components for production deployment, native module
+integration, testing infrastructure, and debugging workflows—all calibrated for
+Antigravity IDE integration.
 
 ---
 
@@ -541,7 +528,9 @@ Based on comprehensive research of Electron's advanced documentation, I've analy
 
 ### The ABI Challenge
 
-Electron uses **Chromium's BoringSSL** instead of OpenSSL, creating a different Application Binary Interface (ABI) from standard Node.js. Native modules must be recompiled for Electron or you'll encounter version mismatch errors.[^2_1]
+Electron uses **Chromium's BoringSSL** instead of OpenSSL, creating a different
+Application Binary Interface (ABI) from standard Node.js. Native modules must be
+recompiled for Electron or you'll encounter version mismatch errors.[^2_1]
 
 ### Solution: `@electron/rebuild`
 
@@ -554,7 +543,8 @@ npm install --save-dev @electron/rebuild
 ./node_modules/.bin/electron-rebuild
 ```
 
-**Electron Forge Integration**: If using Forge, rebuilding happens automatically in development and during packaging.[^2_1]
+**Electron Forge Integration**: If using Forge, rebuilding happens automatically
+in development and during packaging.[^2_1]
 
 **Manual Rebuilding** (Advanced):
 
@@ -565,19 +555,23 @@ HOME=~/.electron-gyp node-gyp rebuild \
   --dist-url=https://electronjs.org/headers
 ```
 
-### Windows-Specific: `win_delay_load_hook`
+## Windows-Specific: `win_delay_load_hook`
 
-Critical for Electron 4+: Native modules must include delay-load hooks in `binding.gyp`:[^2_1]
+Critical for Electron 4+: Native modules must include delay-load hooks in
+`binding.gyp`:[^2_1]
 
 ```python
 'win_delay_load_hook': 'true'
 ```
 
-This redirects `node.dll` references to `electron.exe`. Without it, modules fail with "Module did not self-register" errors.
+This redirects `node.dll` references to `electron.exe`. Without it, modules fail
+with "Module did not self-register" errors.
 
 ### Prebuild Support
 
-Modules using **`prebuild`** or **`node-pre-gyp`** can provide pre-compiled Electron binaries. Use `@electron/rebuild` as fallback when Electron-specific binaries aren't available.[^2_1]
+Modules using **`prebuild`** or **`node-pre-gyp`** can provide pre-compiled
+Electron binaries. Use `@electron/rebuild` as fallback when Electron-specific
+binaries aren't available.[^2_1]
 
 ---
 
@@ -612,7 +606,7 @@ out/
     └── MyApp.app
 ```
 
-### ASAR Archives (Application Packaging)
+## ASAR Archives (Application Packaging)
 
 **What is ASAR?** A simple extensive archive format that bundles source code:[^2_3]
 
@@ -651,7 +645,7 @@ asar pack app app.asar --unpack "*.node"
 # Creates app.asar.unpacked/ folder - ship both together
 ```
 
-### ASAR Integrity Validation
+## ASAR Integrity Validation
 
 **Enable via Fuse**:[^2_4]
 
@@ -664,7 +658,8 @@ flipFuses(require('electron'), {
 });
 ```
 
-This validates `app.asar` content on every load, preventing tampering—critical for B2B security posture.
+This validates `app.asar` content on every load, preventing tampering—critical
+for B2B security posture.
 
 ---
 
@@ -694,7 +689,8 @@ module.exports = {
 };
 ```
 
-**Notarization**: Required for macOS 10.15+. Apple scans your app for malware; without it, users see "unidentified developer" warnings.[^2_5]
+**Notarization**: Required for macOS 10.15+. Apple scans your app for malware;
+without it, users see "unidentified developer" warnings.[^2_5]
 
 ### Windows Code Signing
 
@@ -784,7 +780,7 @@ module.exports = {
 
 **Windows** (`RELEASES` file):
 
-```
+```text
 B0892F3C7AC91D72A6271FF36905FEF8FE993520 MyApp-1.2.3-full.nupkg 103298365
 ```
 
@@ -933,7 +929,7 @@ describe('IPC communication', () => {
 });
 ```
 
-### Custom Test Driver (Lightweight)
+## Custom Test Driver (Lightweight)
 
 **For Antigravity Agents**:[^2_7]
 
@@ -1066,15 +1062,17 @@ jobs:
           CI: true
 ```
 
-**`xvfb-run`**: Provides virtual display for Linux CI environments where GUI apps can't render.
+**`xvfb-run`**: Provides virtual display for Linux CI environments where GUI
+apps can't render.
 
 ---
 
 ## Electron Fuses (Security Hardening)
 
-### What Are Fuses?
+### What Are Fuses
 
-**"Magic bits"** in the Electron binary flipped at package time to disable unused features. OS code signing prevents tampering.[^2_4]
+**"Magic bits"** in the Electron binary flipped at package time to disable
+unused features. OS code signing prevents tampering.[^2_4]
 
 ### Critical Fuses for B2B Automation Tools
 
@@ -1189,7 +1187,7 @@ contextBridge.exposeInMainWorld('electronAPI', {
 
 ---
 
-## Antigravity IDE Integration Strategy
+## Antigravity IDE Integration Strategy (2)
 
 ### Phase 2 Skill Crystallization
 
@@ -1220,8 +1218,8 @@ Complete workflow for packaging, signing, and distributing Electron apps with au
 
 ```bash
 npm install --save-dev @electron/rebuild
-# Automatic rebuild in Forge
-```
+## Automatic rebuild in Forge
+```text
 ````
 
 ### 2. Security Fuses
@@ -1287,7 +1285,7 @@ test('app launches', async () => {
 - Require manual approval for fuse changes
 - Validate update server accessibility before release
 
-````
+```text`
 
 ### AGENTS.md Electron Configuration
 
@@ -1317,7 +1315,7 @@ test('app launches', async () => {
 - Fuse configuration readout
 - Playwright test results with coverage
 - Update server response validation
-````
+```text`
 
 ### CI/CD Pipeline for Agents
 
@@ -1365,7 +1363,7 @@ jobs:
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_KEY }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET }}
-```
+```text
 
 ---
 
@@ -1474,31 +1472,9 @@ Your automation consulting business now has a **production-grade Electron deploy
 
 **Competitive moat**: Combining Antigravity's agent orchestration with Electron's production tooling creates a unique capability—"AI-Built, Enterprise-Deployed Desktop Automation" that traditional developers can't match for speed or reliability.
 
-Ready to proceed to **Phase 3: Containerization \& Advanced Architecture**?
-
-<div align="center">⁂</div>
-
-[^2_1]: Antigravity-fullstack-use-cases.md
-
-[^2_2]: Antigravity-Front-end-ui-use-case.docx
-
-[^2_3]: antigravity-proffsional-use-case.md
-
-[^2_4]: setup.js.pdf
-
-[^2_5]: CONSTITUTION.md
-
-[^2_6]: ARCHITECTURE.md
-
-[^2_7]: TASKS.md
-
-[^2_8]: AGENTS.md
-
-[^2_9]: README.md
-
 ---
 
-# Phase 3: Strategic Containerization \& Layered Architecture
+## Phase 3: Strategic Containerization & Layered Architecture
 
 Based on deep research into Electron's advanced patterns and your requirement for "containerized components," I have developed a **Universally Versatile Architecture** that integrates Electron, Docker, and MCP into a cohesive layered system.
 
@@ -1523,7 +1499,7 @@ _The "Face" of your automation._
 - **Constraint**: **Zero Node.js access**. Strictly sandboxed.
 - **Antigravity Agent**: `Frontend Agent` scaffolds this using your existing UI skills.
 
-### Layer 2: The Bridge Layer (Preload \& Context Isolation)
+### Layer 2: The Bridge Layer (Preload & Context Isolation)
 
 _The "Secure Conduit."_
 
@@ -1561,7 +1537,7 @@ _The "Foundation."_
 
 ---
 
-## Deep Dive: The Sidecar Strategy (Automation \& MCP)
+## Deep Dive: The Sidecar Strategy (Automation & MCP)
 
 This is the most critical component for your "Automation Consultant" persona. It allows you to package complex agentic behaviors into the desktop app.
 
@@ -1596,7 +1572,7 @@ Here is how to integrate this architecture into your Agentic Workflow:
 When starting a new build, instruct the Planning Agent to use this structure:
 
 ```markdown
-# Project Architecture: Electron-Sidecar-MCP
+## Project Architecture: Electron-Sidecar-MCP
 
 ## Layers
 
@@ -1611,7 +1587,7 @@ When starting a new build, instruct the Planning Agent to use this structure:
 - Frontend -> Main: IPC 'invoke'
 - Main -> Sidecar: StdIO / JSON-RPC
 - Sidecar -> Main: Events
-```
+```text
 
 ### 2. Antigravity Skill: "Scaffold Sidecar"
 
@@ -1668,50 +1644,9 @@ Your "Antigravity" framework is now theoretically complete for Desktop Agents.
 **Call to Action**:
 We can now move to **Synthesizing the Master Playbook**. I can generate the specific `AGENTS.md`, `ARCHITECTURE.md`, and `CONSTITUTION.md` file content tailored for this Electron-MCP-Sidecar stack to finalize your Antigravity template.
 
-Shall I proceed with generating the **Antigravity Electron-MCP Playbook**?
-<span style="display:none">[^3_10][^3_11][^3_12][^3_13][^3_14][^3_15][^3_16][^3_17][^3_18][^3_3][^3_4][^3_5][^3_6][^3_7][^3_8][^3_9]</span>
-
-<div align="center">⁂</div>
-
-[^3_1]: https://mcpmarket.com/server/electron
-
-[^3_2]: https://github.com/amafjarkasi/electron-mcp-server
-
-[^3_3]: ARCHITECTURE.md
-
-[^3_4]: Antigravity-fullstack-use-cases.md
-
-[^3_5]: antigravity-proffsional-use-case.md
-
-[^3_6]: https://dev.to/boscodomingo/the-sidecar-pattern-explained-in-5-minutes-26l2
-
-[^3_7]: https://mannidung.github.io/posts/electron-python-boilerplate/
-
-[^3_8]: https://blog.bytebytego.com/p/the-sidecar-pattern-explained-decoupling
-
-[^3_9]: https://stackoverflow.com/questions/79884309/clarification-on-sidecar-pattern-pod-boundaries
-
-[^3_10]: https://system-design.muthu.co/posts/modern-architecture-patterns/sidecar-pattern/index.html
-
-[^3_11]: https://www.reddit.com/r/microservices/comments/j6yek8/what_methods_and_tools_to_work_efficiently_for/
-
-[^3_12]: https://www.reddit.com/r/node/comments/vkffcq/basic1_electron_app_reference_architecture/
-
-[^3_13]: https://stackoverflow.com/questions/66096521/microservice-local-development-guidance
-
-[^3_14]: https://www.reddit.com/r/electronjs/comments/1jqcrzw/electron_boiler_plate_architecture_and_tech_stack/
-
-[^3_15]: https://modelcontextprotocol.io/docs/develop/build-client
-
-[^3_16]: https://blog.logrocket.com/advanced-electron-js-architecture/
-
-[^3_17]: https://www.reddit.com/r/electronjs/comments/7spvf5/architecture_question/
-
-[^3_18]: https://modelcontextprotocol.io/clients
-
 ---
 
-# Avid Antigravity Electron-MCP Playbook
+## Avid Antigravity Electron-MCP Playbook
 
 This playbook represents the **crystallized result** of our deep dive. It is the definitive guide for your "Automation Consultant" builds, merging Antigravity's agentic workflow with Electron's enterprise capabilities and MCP's intelligence.
 
@@ -1724,11 +1659,13 @@ This playbook represents the **crystallized result** of our deep dive. It is the
 This file defines the operating system for your agents. It authorizes them to use Electron, Sidecars, and MCP.
 
 ```markdown
-# AGENTS.md - Avid Antigravity Electron Kernel
+## AGENTS.md - Avid Antigravity Electron Kernel
 
 ## 1. IDENTITY & PURPOSE
 
-You are an expert Automation Architect building "Agent-in-a-Box" desktop solutions. Your goal is to ship robust, offline-first tools that combine Angular UIs, Node.js orchestration, and Python/MCP intelligence.
+You are an expert Automation Architect building "Agent-in-a-Box" desktop
+solutions. Your goal is to ship robust, offline-first tools that combine Angular
+UIs, Node.js orchestration, and Python/MCP intelligence.
 
 ## 2. TECH STACK (Whitelisted)
 
@@ -1764,7 +1701,7 @@ You are an expert Automation Architect building "Agent-in-a-Box" desktop solutio
 ## 6. PRODUCT VISION
 
 > "We build tools that give B2B clients superpowers on their local machines, independent of the cloud, secure by design."
-```
+```text
 
 ---
 
@@ -1773,7 +1710,7 @@ You are an expert Automation Architect building "Agent-in-a-Box" desktop solutio
 This defines the structural laws your agents must follow when scaffolding.
 
 ````markdown
-# ARCHITECTURE.md - The 5-Layer Electron Pattern
+## ARCHITECTURE.md - The 5-Layer Electron Pattern
 
 ## Layer 1: The Presentation (UI)
 
@@ -1811,7 +1748,7 @@ This defines the structural laws your agents must follow when scaffolding.
 - **Path**: `/docker` or `app.getPath('userData')`
 - **Storage**: SQLite for app state. Docker for vector/relational data.
 - **Backup**: Automated dumps to JSON artifacts.
-````
+```text`
 
 ---
 
@@ -1820,7 +1757,7 @@ This defines the structural laws your agents must follow when scaffolding.
 This ensures your agents never violate security or reliability principles.
 
 ```markdown
-# CONSTITUTION.md - Development Constraints
+## CONSTITUTION.md - Development Constraints
 
 ## 1. The Lethal Trifecta (PREVENTION)
 
@@ -1848,7 +1785,7 @@ NEVER allow a build that combines:
 
 - The app must function without internet.
 - AI features gracefully degrade or switch to local models (Ollama) if offline.
-```
+```text
 
 ---
 
@@ -1864,7 +1801,8 @@ Your app _is_ an MCP server to itself.
 ```javascript
 // src/main/mcp-server.ts
 import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
-import { StdioServerTransport } from '@modelcontextprotocol/sdk/server/stdio.js';
+import { StdioServerTransport } from
+'@modelcontextprotocol/sdk/server/stdio.js';
 
 const server = new McpServer({ name: 'AvidAutomation', version: '1.0.0' });
 
@@ -1876,7 +1814,7 @@ server.tool('scrape_linkedin', { url: z.string() }, async ({ url }) => {
 // Connects to stdio for external agents to use YOUR app as a tool
 const transport = new StdioServerTransport();
 await server.connect(transport);
-```
+```text
 
 ### B. Connecting to MCP Clients (External)
 
@@ -1906,6 +1844,135 @@ Before you ship to a client, run this **Avid Verification Protocol**:
 
 You now have a **Universally Versatile** factory for building enterprise-grade automation tools. This is the "Avid Antigravity" standard.
 
-<div align="center">⁂</div>
+---
 
-[^4_1]: antigravity-proffsional-use-case.md
+# References
+
+[^1_1]: Antigravity-fullstack-use-cases.md
+
+[^1_2]: Antigravity-Front-end-ui-use-case.docx
+
+[^1_3]: antigravity-professional-use-case.md
+
+[^1_4]: setup.js.pdf
+
+[^1_5]: CONSTITUTION.md
+
+[^1_6]: ARCHITECTURE.md
+
+[^1_7]: TASKS.md
+
+[^1_8]: AGENTS.md
+
+[^2_1]: Antigravity-fullstack-use-cases.md
+
+[^2_2]: Antigravity-Front-end-ui-use-case.docx
+
+[^2_3]: antigravity-professional-use-case.md
+
+[^2_4]: setup.js.pdf
+
+[^2_5]: CONSTITUTION.md
+
+[^2_6]: ARCHITECTURE.md
+
+[^2_7]: TASKS.md
+
+[^2_8]: AGENTS.md
+
+[^2_9]: README.md
+
+[^3_1]: <https://mcpmarket.com/server/electron>
+
+[^3_2]: <https://github.com/amafjarkasi/electron-mcp-server>
+
+[^4_1]: antigravity-professional-use-case.md
+
+---
+
+## References
+
+[^1_1]: Antigravity-fullstack-use-cases.md
+
+[^1_2]: Antigravity-Front-end-ui-use-case.docx
+
+[^1_3]: antigravity-professional-use-case.md
+
+[^1_4]: setup.js.pdf
+
+[^1_5]: CONSTITUTION.md
+
+[^1_6]: ARCHITECTURE.md
+
+[^1_7]: TASKS.md
+
+[^1_8]: AGENTS.md
+
+[^2_1]: Antigravity-fullstack-use-cases.md
+
+[^2_2]: Antigravity-Front-end-ui-use-case.docx
+
+[^2_3]: antigravity-professional-use-case.md
+
+[^2_4]: setup.js.pdf
+
+[^2_5]: CONSTITUTION.md
+
+[^2_6]: ARCHITECTURE.md
+
+[^2_7]: TASKS.md
+
+[^2_8]: AGENTS.md
+
+[^2_9]: README.md
+
+[^3_1]: <https://mcpmarket.com/server/electron>
+
+[^3_2]: <https://github.com/amafjarkasi/electron-mcp-server>
+
+[^4_1]: antigravity-professional-use-case.md
+
+---
+
+## References
+
+[^1_1]: Antigravity-fullstack-use-cases.md
+
+[^1_2]: Antigravity-Front-end-ui-use-case.docx
+
+[^1_3]: antigravity-professional-use-case.md
+
+[^1_4]: setup.js.pdf
+
+[^1_5]: CONSTITUTION.md
+
+[^1_6]: ARCHITECTURE.md
+
+[^1_7]: TASKS.md
+
+[^1_8]: AGENTS.md
+
+[^2_1]: Antigravity-fullstack-use-cases.md
+
+[^2_2]: Antigravity-Front-end-ui-use-case.docx
+
+[^2_3]: antigravity-professional-use-case.md
+
+[^2_4]: setup.js.pdf
+
+[^2_5]: CONSTITUTION.md
+
+[^2_6]: ARCHITECTURE.md
+
+[^2_7]: TASKS.md
+
+[^2_8]: AGENTS.md
+
+[^2_9]: README.md
+
+[^3_1]: <https://mcpmarket.com/server/electron>
+
+[^3_2]: <https://github.com/amafjarkasi/electron-mcp-server>
+
+[^4_1]: antigravity-professional-use-case.md
+
