@@ -1,0 +1,10 @@
+{
+	"folders": [
+		{
+			"path": "."
+		}
+	],
+	"settings": {
+		"github-actions.remote-name": "https://github.com/stackconsult/antigravity-playground-x-assistant"
+	}
+}
