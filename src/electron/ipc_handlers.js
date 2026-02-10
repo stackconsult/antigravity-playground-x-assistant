@@ -10,6 +10,7 @@ const CalendarManager = require('../plugins/calendar_manager');
 const InboxProcessor = require('../plugins/inbox_processor');
 const TripPlanner = require('../plugins/trip_planner');
 const AuthManager = require('../plugins/auth_manager');
+const OutboundSequencer = require('../plugins/outbound_sequencer');
 
 const IPCHandlers = {
     kernel: null,
@@ -24,6 +25,7 @@ const IPCHandlers = {
         kernel.use(InboxProcessor);
         kernel.use(TripPlanner);
         kernel.use(AuthManager);
+        kernel.use(OutboundSequencer);
 
         await kernel.boot();
         IPCHandlers.kernel = kernel;
@@ -64,23 +66,34 @@ const IPCHandlers = {
         const kernel = IPCHandlers.kernel;
 
         // 1. Audit Calendar (Real GCal)
-        const issues = await kernel.calendar.auditEvents(kernel);
+        let issues = [];
+        if (kernel.calendar && kernel.calendar.auditEvents) {
+            issues = await kernel.calendar.auditEvents(kernel);
+        }
 
-        // 2. Process Inbox (Real Gmail)
-        const emails = await kernel.inbox.fetchLikelyInbox(kernel);
+        // 2. Process Inbox (Real Gmail + AI Sorter)
+        const emails = await kernel.inbox.fetchLikelyInbox();
 
+        // 3. Process Outbound Queue (Sequencer)
+        if (kernel.sequencer && kernel.sequencer.processQueue) {
+            await kernel.sequencer.processQueue();
+        }
+
+        // Map to UI format
         const processedEmails = emails.map(email => ({
-            ...email,
-            label: kernel.inbox.suggestLabel(email),
-            draft: kernel.inbox.suggestLabel(email) === '@To Respond' && email.subject.includes('Investment')
-                ? kernel.inbox.getDraftResponse('invest')
-                : null
+            id: email.id,
+            subject: email.subject,
+            // Map Category to Label for UI
+            label: email.priority.category === 'CRITICAL' ? '@Urgent' :
+                (email.priority.category === 'LOW' ? '@Low Priority' : '@Inbox'),
+            score: email.priority.score, // Pass score for visualization if needed
+            draft: email.action.includes('Critical') ? null : null // Draft logic (TODO)
         }));
 
         return {
             issues,
             emails: processedEmails,
-            summary: `Processed ${emails.length} emails and found ${issues.length} calendar issues.`
+            summary: `Processed ${emails.length} emails. ${processedEmails.filter(e => e.label === '@Urgent').length} Critical items found.`
         };
     },
 

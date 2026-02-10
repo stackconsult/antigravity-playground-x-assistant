@@ -5,6 +5,7 @@
 
 const RULES = require('./rules');
 const PreferenceManager = require('./preferences');
+const Sorter = require('./sorter');
 
 const CoreLogicPlugin = {
     name: 'CEO_Assistant_Core_Logic',
@@ -15,6 +16,7 @@ const CoreLogicPlugin = {
         // Attach capabilities to the kernel
         kernel.rules = RULES;
         kernel.preferences = new PreferenceManager();
+        kernel.sorter = Sorter;
 
         console.log('[PLUGIN] Core Logic Ready.');
         console.log('[PLUGIN] North Star Principles Loaded:');
